@@ -1,0 +1,97 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  margin: 0;
+}
+
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* اتجاه الصفحة كرقم (+1 لليمين) عشان الحركات تتعكس لوحدها مع اللغة */
+html[dir="rtl"] { --dir: 1; }
+html[dir="ltr"] { --dir: -1; }
+html { scroll-behavior: smooth; }
+
+/* انعكاس الصفحة عند تبديل اللغة */
+.app.flip-out {
+  transform: perspective(1400px) rotateY(88deg);
+  opacity: 0.2;
+  transition: transform 230ms ease-in, opacity 230ms ease-in;
+}
+.app.flip-in {
+  animation: flip-in 300ms ease-out both;
+}
+@keyframes flip-in {
+  from { transform: perspective(1400px) rotateY(-88deg); opacity: 0.2; }
+  to { transform: none; opacity: 1; }
+}
+
+/* ظهور العناصر عند الوصول ليها */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease, transform 700ms ease;
+  transition-delay: var(--delay, 0ms);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+html[dir="rtl"] { --origin: right; }
+html[dir="ltr"] { --origin: left; }
+
+/* هيكل موحّد للأقسام */
+.section {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding: var(--section-gap) var(--s-12);
+  scroll-margin-top: 64px;
+}
+.section > h2 {
+  margin-bottom: var(--s-12);
+  font-size: clamp(32px, 4vw, 44px);
+  line-height: 1.2;
+}
+@media (max-width: 900px) {
+  .section { padding: var(--s-16) var(--s-6); }
+}

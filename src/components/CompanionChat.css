@@ -1,0 +1,67 @@
+/* نافذة الرفيق سادة (من غير زجاج) زي ما اتفقنا */
+.chat {
+  width: 100%;
+  max-width: 560px;
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+}
+.chat-title {
+  margin: 0;
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--gold);
+}
+.chat-log {
+  display: grid;
+  align-content: start;
+  gap: var(--s-3);
+  height: 280px;
+  overflow-y: auto;
+  padding: var(--s-4);
+}
+.msg {
+  margin: 0;
+  max-width: 85%;
+  line-height: 1.7;
+}
+.msg.bot { color: var(--text); }
+.msg.me { justify-self: end; color: var(--text-2); }
+.msg.dim { color: var(--text-2); font-family: var(--font-mono); font-size: 13px; }
+.msg.note { color: var(--error); font-size: 14px; }
+
+/* خانة الكتابة على شكل سطر طرفية */
+.chat-input {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-mono);
+}
+.chat-input:focus-within {
+  border-top-color: var(--gold);
+}
+.prompt { color: var(--gold); }
+.chat-input input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  outline: 0;
+  color: var(--text);
+  font: inherit;
+}
+.chat-input button {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: var(--s-1) var(--s-3);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+.chat-input button:disabled { opacity: 0.4; cursor: default; }
+.chat-input button:not(:disabled):hover { border-color: var(--gold); color: var(--gold); }

@@ -1,0 +1,74 @@
+.demo {
+  position: fixed;
+  inset-inline-end: var(--s-6);
+  bottom: var(--s-6);
+  z-index: 300;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  width: min(760px, calc(100vw - 48px));
+  height: min(72vh, 640px);
+  background: #050505;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius);
+  overflow: hidden;
+  animation: demo-in 400ms ease both;
+}
+.demo.mini { display: none; }
+
+.demo-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s-2) var(--s-4);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: var(--glass-border);
+}
+.demo-title { font-family: var(--font-mono); font-size: 13px; color: var(--gold); }
+.demo-tools { display: flex; gap: var(--s-2); }
+.demo-tools button {
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
+}
+.demo-tools button:hover { border-color: var(--gold); color: var(--gold); }
+.demo iframe { width: 100%; height: 100%; border: 0; background: #fff; }
+
+.demo-mini {
+  position: fixed;
+  inset-inline-end: var(--s-6);
+  bottom: var(--s-6);
+  z-index: 300;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #000;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  box-shadow: var(--glow-gold);
+  font-family: var(--font-heading);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+@keyframes demo-in {
+  from { opacity: 0; filter: blur(10px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+/* الموبايل: ملء الشاشة */
+@media (max-width: 700px) {
+  .demo {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+}

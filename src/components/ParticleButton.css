@@ -1,0 +1,30 @@
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: var(--s-3) var(--s-8);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+}
+.btn.primary { color: var(--gold); border: 1px solid var(--gold); }
+.btn.secondary { color: var(--text); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+/* الحد بيضيء بخفة، والجسيمات بتتولّد من الـ canvas حواليه */
+.btn:hover,
+.btn:focus-visible {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 18px rgba(227, 176, 75, 0.3);
+}
+
+.spark-fx {
+  position: absolute;
+  left: -28px;
+  top: -28px;
+  pointer-events: none;
+}

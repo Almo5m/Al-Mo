@@ -1,0 +1,238 @@
+/* Header ثابت دايمًا بزجاج ناعم */
+.hdr {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  z-index: 100;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: var(--glass-border);
+}
+.hdr-in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-6);
+  height: 64px;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: var(--s-8);
+}
+
+/* الشعار: المكعب مقصوص من صورة الشعار + الاسم كنص حقيقي */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  color: var(--text);
+  text-decoration: none;
+}
+.mark {
+  --w: 34px;
+  display: block;
+  width: var(--w);
+  height: calc(var(--w) / 0.39 * 0.48);
+  background: url("/logo-almo.png") no-repeat;
+  background-size: calc(var(--w) / 0.39) auto;
+  background-position: calc(var(--w) / 0.39 * -0.305) calc(var(--w) / 0.39 * -0.14);
+  mix-blend-mode: screen;
+}
+.brand-text {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.14em;
+}
+
+/* روابط القائمة: نقطة ذهبية بتنزلق قبل الكلمة */
+.nav {
+  display: flex;
+  gap: var(--s-8);
+}
+.nav a,
+.menu nav a {
+  position: relative;
+  padding-inline-start: 14px;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+}
+.nav a::before,
+.menu nav a::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0;
+  transform: translate(calc(var(--dir) * 10px), -50%) scale(0.4);
+  transition: transform 300ms cubic-bezier(0.2, 0.9, 0.25, 1), opacity 200ms ease;
+}
+.nav a:hover::before,
+.nav a:focus-visible::before,
+.menu nav a:hover::before {
+  opacity: 1;
+  transform: translate(0, -50%) scale(1);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+/* زر التواصل: العنصر المصمت الوحيد في الموقع. الـ hover لمعة بتعدّي عليه */
+.cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: var(--s-2) var(--s-6);
+  border-radius: var(--radius);
+  background: var(--gold);
+  color: #000;
+  font-weight: 700;
+  text-decoration: none;
+  transition: box-shadow 250ms ease;
+}
+.cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.6) 50%, transparent 70%);
+  transform: translateX(calc(var(--dir) * 130%));
+  transition: transform 650ms ease;
+}
+.cta:hover,
+.cta:focus-visible {
+  box-shadow: var(--glow-gold);
+}
+.cta:hover::after {
+  transform: translateX(calc(var(--dir) * -130%));
+}
+
+/* مفتاح اللغة */
+.lang {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2);
+  background: none;
+  border: 0;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  cursor: pointer;
+}
+.lang.ar .lbl:first-child,
+.lang.en .lbl:last-child {
+  color: var(--text);
+}
+.lang .track {
+  width: 36px;
+  height: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9px;
+  position: relative;
+}
+.lang .dot {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  transition: transform 350ms cubic-bezier(0.3, 1.6, 0.4, 1), box-shadow 250ms ease;
+}
+.lang.en .dot {
+  transform: translateX(18px);
+}
+.lang:hover .dot {
+  box-shadow: 0 0 10px rgba(227, 176, 75, 0.8);
+}
+
+/* الموبايل: قائمة منسدلة صغيرة زجاجية */
+.burger,
+.menu,
+.scrim {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .hdr-in {
+    padding-inline: var(--s-6);
+  }
+  .nav,
+  .actions {
+    display: none;
+  }
+  .burger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    padding: 0 var(--s-3);
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .burger span {
+    height: 1.5px;
+    background: var(--text);
+    transition: transform 300ms ease;
+  }
+  .burger.open span:first-child {
+    transform: translateY(3.75px) rotate(45deg);
+  }
+  .burger.open span:last-child {
+    transform: translateY(-3.75px) rotate(-45deg);
+  }
+
+  .scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+  }
+  .menu {
+    display: grid;
+    gap: var(--s-6);
+    position: absolute;
+    top: 100%;
+    inset-inline: var(--s-4);
+    margin-top: var(--s-2);
+    padding: var(--s-6);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+    border-radius: var(--radius);
+    opacity: 0;
+    filter: blur(8px);
+    pointer-events: none;
+    transition: opacity 300ms ease, filter 300ms ease;
+  }
+  .menu.open {
+    opacity: 1;
+    filter: blur(0);
+    pointer-events: auto;
+  }
+  .menu nav {
+    display: grid;
+    gap: var(--s-4);
+  }
+  .menu-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

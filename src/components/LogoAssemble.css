@@ -1,0 +1,94 @@
+@property --a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 360deg;
+}
+
+.logo {
+  --size: min(72vmin, 520px);
+  position: relative;
+  width: var(--size);
+  aspect-ratio: 1;
+}
+
+/* توهج خفيف ورا الشعار (مش filter عشان ما نكسرش الدمج) */
+.logo::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  background: radial-gradient(circle, rgba(227, 176, 75, 0.22), transparent 62%);
+  animation: glow 900ms ease-out calc(var(--d) + 1500ms) both;
+}
+
+/* screen بيخلّي الأسود الصافي يختفي، فالطبقات ما بتغطيش بعض أثناء الحركة */
+.layer {
+  position: absolute;
+  inset: 0;
+  background: url("/logo-almo.png") center / 100% 100% no-repeat;
+  mix-blend-mode: screen;
+}
+
+/* الحلقة: بتترسم باتجاه عقارب الساعة (قناع حلقي × قناع دائري بيتفتح) */
+.ring {
+  --a: 0deg;
+  -webkit-mask-image:
+    radial-gradient(circle at 49.7% 48.6%, transparent calc(var(--size) * 0.427), #000 calc(var(--size) * 0.43), #000 calc(var(--size) * 0.458), transparent calc(var(--size) * 0.461)),
+    conic-gradient(from -90deg at 49.7% 48.6%, #000 var(--a), transparent var(--a));
+  mask-image:
+    radial-gradient(circle at 49.7% 48.6%, transparent calc(var(--size) * 0.427), #000 calc(var(--size) * 0.43), #000 calc(var(--size) * 0.458), transparent calc(var(--size) * 0.461)),
+    conic-gradient(from -90deg at 49.7% 48.6%, #000 var(--a), transparent var(--a));
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  animation: draw 700ms cubic-bezier(0.4, 0, 0.2, 1) var(--d) both;
+}
+
+.face {
+  animation-duration: 650ms;
+  animation-timing-function: cubic-bezier(0.2, 0.9, 0.25, 1);
+  animation-fill-mode: both;
+}
+.top {
+  clip-path: polygon(33.3% 25.7%, 49.9% 15.6%, 66.6% 25.7%, 49.9% 36.3%);
+  animation-name: from-top;
+  animation-delay: calc(var(--d) + 200ms);
+}
+.left {
+  clip-path: polygon(31.3% 26.7%, 50.2% 37.3%, 50.2% 60%, 31.3% 49.8%);
+  animation-name: from-left;
+  animation-delay: calc(var(--d) + 320ms);
+}
+.right {
+  clip-path: polygon(50.1% 37.3%, 68.7% 26.7%, 68.7% 50.1%, 50.1% 60%);
+  animation-name: from-right;
+  animation-delay: calc(var(--d) + 440ms);
+}
+.word {
+  clip-path: polygon(19% 61%, 81% 61%, 81% 78%, 19% 78%);
+  animation: word-in 500ms ease-out calc(var(--d) + 900ms) both;
+}
+
+@keyframes draw {
+  from { --a: 0deg; }
+  to { --a: 361deg; }
+}
+@keyframes from-top {
+  from { opacity: 0; transform: perspective(900px) translateY(-16%) rotateX(40deg) scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes from-left {
+  from { opacity: 0; transform: perspective(900px) translateX(-18%) rotateY(-35deg) scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes from-right {
+  from { opacity: 0; transform: perspective(900px) translateX(18%) rotateY(35deg) scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(6%); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@keyframes glow {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0.55; }
+}

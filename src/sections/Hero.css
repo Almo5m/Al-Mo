@@ -1,0 +1,63 @@
+.hero {
+  position: relative; /* الـ canvas بتاع الجسيمات بيتمدد جواه */
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--s-12);
+  padding: var(--s-24) var(--s-12);
+  overflow: hidden;
+}
+
+.hero-text {
+  display: grid;
+  gap: var(--s-6);
+  justify-items: start;
+}
+.rot,
+.hero-cta {
+  position: relative;
+  z-index: 2;
+}
+
+/* مكان الرفيق (الروبوت) لحد ما نبنيه، مع الضوء الذهبي الخافت من الخلف */
+.hero-visual {
+  min-height: 360px;
+  background: radial-gradient(circle at 50% 50%, rgba(227, 176, 75, 0.12), transparent 60%);
+}
+
+.rot {
+  margin: 0;
+  min-height: 1.6em;
+  font-family: var(--font-line);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+.rot span {
+  display: inline-block;
+  animation: rot-cycle 2500ms ease both;
+}
+@keyframes rot-cycle {
+  0% { opacity: 0; filter: blur(8px); }
+  18% { opacity: 1; filter: blur(0); }
+  82% { opacity: 1; filter: blur(0); }
+  100% { opacity: 0; filter: blur(8px); }
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: var(--s-16) var(--s-6);
+  }
+  .hero-visual {
+    min-height: 240px;
+    order: -1;
+  }
+}

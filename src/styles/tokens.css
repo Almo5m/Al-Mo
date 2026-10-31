@@ -1,0 +1,40 @@
+/* كل قيمة هنا جاية من ملف نظام التصميم. أي تغيير بيتم هنا بس. */
+:root {
+  /* الألوان */
+  --bg: #000000;
+  --gold: #e3b04b;
+  --text: #ffffff;
+  --text-2: #8c867a;
+  --error: #c8453b;
+
+  /* المسافات: شبكة 4px */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-24: 96px;
+  --section-gap: 120px;
+
+  /* الحواف */
+  --radius: 4px;
+  --line-gold: 1px solid var(--gold);
+
+  /* الزجاج الناعم */
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --glass-blur: blur(12px);
+
+  /* التوهج */
+  --glow-gold: 0 0 24px rgba(227, 176, 75, 0.25);
+
+  /* الخطوط: العناوين العربي بتنزل على Cairo لأن Space Grotesk لاتيني */
+  --font-heading: "Space Grotesk", "Cairo", sans-serif;
+  --font-body: "Cairo", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-line: "IBM Plex Sans Arabic", "Cairo", sans-serif;
+  --hero-size: clamp(48px, 6vw, 56px);
+}

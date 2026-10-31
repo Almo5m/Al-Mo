@@ -1,0 +1,55 @@
+.loader {
+  --p: 0;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+}
+
+.meter {
+  position: absolute;
+  bottom: calc(9vh + env(safe-area-inset-bottom, 0px));
+  width: min(60vmin, 480px);
+  display: grid;
+  gap: var(--s-3);
+  justify-items: center;
+}
+.count {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+.count i {
+  font-style: normal;
+  font-size: 14px;
+  margin-inline-start: 2px;
+  color: var(--text-2);
+}
+.bar {
+  width: 100%;
+  height: 3px;
+  background: #2a2a2a;
+}
+.bar span {
+  display: block;
+  height: 100%;
+  background: var(--gold);
+  transform-origin: left;
+  transform: scaleX(var(--p));
+}
+
+.loader.complete .logo {
+  animation: done-pop 600ms ease-out;
+}
+@keyframes done-pop {
+  40% { transform: scale(1.03); }
+}
+
+.loader.leaving {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+}

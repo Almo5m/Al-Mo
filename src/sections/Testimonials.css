@@ -1,0 +1,27 @@
+.marquee { overflow: hidden; }
+.marquee-track {
+  display: flex;
+  gap: var(--s-6);
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.quote {
+  width: 360px;
+  margin: 0;
+  padding: var(--s-6);
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+}
+.quote blockquote { margin: 0 0 var(--s-4); line-height: 1.8; }
+.quote figcaption { color: var(--gold); font-family: var(--font-mono); font-size: 13px; }
+
+/* الاتجاه بيتعكس مع اللغة (--dir) واللف بيتكرر من غير فجوة لأن القائمة متكررة */
+@keyframes marquee {
+  to { transform: translateX(calc(var(--dir) * 50%)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee { overflow-x: auto; }
+  .marquee-track { animation: none; }
+}

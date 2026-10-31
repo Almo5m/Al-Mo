@@ -1,0 +1,55 @@
+.rail {
+  position: fixed;
+  inset-inline-end: var(--s-6);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: grid;
+  gap: 14px;
+}
+.rail a {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transition: background 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+}
+.rail a.on { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 10px rgba(227, 176, 75, 0.7); }
+/* الـ Tooltip الزجاجي */
+.rail a::after {
+  content: attr(data-label);
+  position: absolute;
+  inset-inline-end: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: var(--s-1) var(--s-3);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 13px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+.rail a:hover::after { opacity: 1; }
+
+.progress {
+  display: none;
+  position: fixed;
+  top: calc(64px + env(safe-area-inset-top, 0px));
+  inset-inline: 0;
+  height: 2px;
+  z-index: 99;
+  background: var(--gold);
+  transform-origin: var(--origin);
+  transform: scaleX(var(--p));
+}
+@media (max-width: 900px) {
+  .rail { display: none; }
+  .progress { display: block; }
+}

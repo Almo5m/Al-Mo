@@ -1,0 +1,76 @@
+/* كارت سادة (من غير زجاج) بحد ذهبي بيظهر عند الـ hover */
+.card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--s-6);
+  background: #0a0a0a;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 200ms ease-out, border-color 250ms ease;
+}
+.card:hover { border-color: var(--gold); }
+/* اللمعة الذهبية اللي بتتبع المؤشر */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(240px circle at var(--mx) var(--my), rgba(227, 176, 75, 0.16), transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms ease;
+}
+.card:hover::after { opacity: 1; }
+
+.preview {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  background: repeating-linear-gradient(135deg, rgba(227, 176, 75, 0.08) 0 2px, transparent 2px 14px);
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.card h3 { font-size: 22px; }
+.desc, .impact { margin: 0; color: var(--text-2); line-height: 1.7; }
+.impact b { color: var(--text); font-weight: 600; }
+
+.tags { display: flex; flex-wrap: wrap; gap: var(--s-2); margin: 0; padding: 0; list-style: none; }
+/* التاج: الإطار بيترسم من الأركان عند الـ hover */
+.tag {
+  padding: var(--s-1) var(--s-2);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--gold);
+  background:
+    linear-gradient(var(--gold), var(--gold)) top left / 0 1px no-repeat,
+    linear-gradient(var(--gold), var(--gold)) top right / 1px 0 no-repeat,
+    linear-gradient(var(--gold), var(--gold)) bottom right / 0 1px no-repeat,
+    linear-gradient(var(--gold), var(--gold)) bottom left / 1px 0 no-repeat;
+  transition: background-size 350ms ease;
+}
+.tag:hover { background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%; }
+
+.card-btn {
+  justify-self: start;
+  margin-top: var(--s-2);
+  padding: var(--s-2) var(--s-6);
+  background: none;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+  transition: box-shadow 250ms ease;
+}
+.card-btn:not(:disabled):hover { box-shadow: var(--glow-gold); }
+.card-btn:disabled { color: var(--text-2); border-color: rgba(255, 255, 255, 0.2); cursor: default; }
