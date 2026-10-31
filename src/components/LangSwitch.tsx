@@ -10,6 +10,7 @@ export default function LangSwitch({ lang, onSwitch }: { lang: Lang; onSwitch: (
       aria-label="العربية / English"
       className={`lang ${lang}`}
       dir="ltr"
+      data-no-scramble
       onClick={() => onSwitch(lang === "ar" ? "en" : "ar")}
     >
       <span className="lbl">ع</span>

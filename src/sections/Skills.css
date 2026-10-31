@@ -89,3 +89,7 @@
   .hex-name { font-size: 12px; }
   .skill-panel { padding: var(--s-6); }
 }
+
+@media (max-width: 480px) {
+  .skills { --hex: 112px; }
+}

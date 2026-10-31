@@ -51,19 +51,13 @@ html[dir="rtl"] { --dir: 1; }
 html[dir="ltr"] { --dir: -1; }
 html { scroll-behavior: smooth; }
 
-/* انعكاس الصفحة عند تبديل اللغة */
-.app.flip-out {
-  transform: perspective(1400px) rotateY(88deg);
-  opacity: 0.2;
-  transition: transform 230ms ease-in, opacity 230ms ease-in;
-}
-.app.flip-in {
-  animation: flip-in 300ms ease-out both;
-}
-@keyframes flip-in {
-  from { transform: perspective(1400px) rotateY(-88deg); opacity: 0.2; }
-  to { transform: none; opacity: 1; }
-}
+/* تبديل اللغة: الصفحة بتخفت لحظة وبعدين الحروف بتتحوّل */
+.app { transition: opacity 160ms ease; }
+.app.switching { opacity: 0.2; }
+
+/* أي عنصر طالع بره الشاشة (زي جسيمات الأزرار) ما يخلّيش الصفحة تتمدد أو تصغّر على الموبايل.
+   clip مش بيكسر position: sticky زي hidden. */
+html, body { overflow-x: clip; }
 
 /* ظهور العناصر عند الوصول ليها */
 .reveal {

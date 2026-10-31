@@ -261,7 +261,7 @@ export default function ParticleHeadline({ text }: { text: string }) {
   return (
     <div className="ph">
       <canvas ref={canvasRef} className="ph-canvas" aria-hidden="true" />
-      <h1 ref={h1Ref} className={`ph-h1 ${mode}`}>
+      <h1 ref={h1Ref} className={`ph-h1 ${mode}`} data-no-scramble>
         {words.map((w, i) => (
           <Fragment key={i}>
             <span>{w}</span>{" "}

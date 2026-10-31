@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { applyLang, DEFAULT_LANG, type Lang } from "./i18n";
 import { LangContext } from "./i18n/LangContext";
+import { scrambleTexts } from "./lib/scramble";
 import Loader from "./sections/Loader";
 import Header from "./sections/Header";
 import Hero from "./sections/Hero";
@@ -14,13 +15,22 @@ import Footer from "./sections/Footer";
 import SectionRail from "./components/SectionRail";
 
 type Phase = "loading" | "leaving" | "done";
-type Flip = "" | "out" | "in";
 
 export default function App() {
   const [phase, setPhase] = useState<Phase>("loading");
   const [lang, setLang] = useState<Lang>(DEFAULT_LANG);
-  const [flip, setFlip] = useState<Flip>("");
+  const [switching, setSwitching] = useState(false);
+  const appRef = useRef<HTMLDivElement>(null);
+  const scrambleNext = useRef(false);
   useEffect(() => applyLang(DEFAULT_LANG), []);
+
+  // بعد ما React يرسم النصوص بالغة الجديدة، الحروف بتتحوّل وتستقر
+  useEffect(() => {
+    if (!scrambleNext.current) return;
+    scrambleNext.current = false;
+    scrambleTexts(appRef.current, lang);
+    setSwitching(false);
+  }, [lang]);
 
   // الـ Hero بيبدأ يتحمّل (والجسيمات بتنطلق) بينما شاشة التحميل بتتلاشى
   function startLeaving() {
@@ -28,7 +38,7 @@ export default function App() {
     setTimeout(() => setPhase("done"), 450);
   }
 
-  // تبديل اللغة بانعكاس الصفحة: بتلف لحد ما تختفي، نغيّر اللغة والاتجاه، وترجع تلف
+  // تبديل اللغة: الصفحة بتخفت لحظة، اللغة والاتجاه بيتغيّروا، والحروف بتتحوّل لحد ما تستقر
   function switchLang(next: Lang) {
     if (next === lang) return;
     const apply = () => {
@@ -39,17 +49,16 @@ export default function App() {
       apply();
       return;
     }
-    setFlip("out");
+    setSwitching(true);
     setTimeout(() => {
+      scrambleNext.current = true;
       apply();
-      setFlip("in");
-      setTimeout(() => setFlip(""), 320);
-    }, 230);
+    }, 160);
   }
 
   return (
     <LangContext.Provider value={lang}>
-      <div className={`app ${flip ? `flip-${flip}` : ""}`}>
+      <div ref={appRef} className={`app ${switching ? "switching" : ""}`}>
         {phase !== "loading" && (
           <>
             <Header onSwitchLang={switchLang} />

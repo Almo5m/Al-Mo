@@ -31,7 +31,7 @@ export default function Header({ onSwitchLang }: { onSwitchLang: (l: Lang) => vo
       <div className="hdr-in">
         <a className="brand" href="#top" aria-label="AL MO">
           <span className="mark" aria-hidden="true" />
-          <span className="brand-text">AL MO</span>
+          <span className="brand-text" data-no-scramble>AL MO</span>
         </a>
 
         <nav className="nav" aria-label="main">
