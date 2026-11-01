@@ -23,6 +23,8 @@
 }
 
 .spark-fx {
+  width: 0;
+  height: 0;
   position: absolute;
   left: -28px;
   top: -28px;
