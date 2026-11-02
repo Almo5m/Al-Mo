@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import LangSwitch from "../components/LangSwitch";
+import LogoMark from "../components/LogoMark";
 import { useLang } from "../i18n/LangContext";
 import { HEADER } from "../i18n/header";
 import type { Lang } from "../i18n";
@@ -30,7 +31,7 @@ export default function Header({ onSwitchLang }: { onSwitchLang: (l: Lang) => vo
     <header className="hdr">
       <div className="hdr-in">
         <a className="brand" href="#top" aria-label="AL MO">
-          <span className="mark" aria-hidden="true" />
+          <LogoMark />
           <span className="brand-text" data-no-scramble>AL MO</span>
         </a>
 

@@ -21,23 +21,13 @@
   padding-inline: var(--s-8);
 }
 
-/* الشعار: المكعب مقصوص من صورة الشعار + الاسم كنص حقيقي */
+/* الشعار: المكعب SVG (LogoMark) + الاسم كنص حقيقي */
 .brand {
   display: inline-flex;
   align-items: center;
   gap: var(--s-3);
   color: var(--text);
   text-decoration: none;
-}
-.mark {
-  --w: 34px;
-  display: block;
-  width: var(--w);
-  height: calc(var(--w) / 0.39 * 0.48);
-  background: url("/logo-almo.png") no-repeat;
-  background-size: calc(var(--w) / 0.39) auto;
-  background-position: calc(var(--w) / 0.39 * -0.305) calc(var(--w) / 0.39 * -0.14);
-  mix-blend-mode: screen;
 }
 .brand-text {
   font-family: "Space Grotesk", sans-serif;

@@ -1,0 +1,15 @@
+.lm {
+  display: block;
+  height: 40px;
+  aspect-ratio: 664 / 780;
+  overflow: visible;
+}
+
+/* لما المؤشر يقف على الشعار الأوجه بتتركّب من جديد: كل وجه بييجي من اتجاه (زي شاشة التحميل) */
+.brand:hover .lm-top, .brand:focus-visible .lm-top { animation: lm-in-top 520ms cubic-bezier(0.2, 0.9, 0.25, 1) both; }
+.brand:hover .lm-left, .brand:focus-visible .lm-left { animation: lm-in-left 520ms cubic-bezier(0.2, 0.9, 0.25, 1) 70ms both; }
+.brand:hover .lm-right, .brand:focus-visible .lm-right { animation: lm-in-right 520ms cubic-bezier(0.2, 0.9, 0.25, 1) 140ms both; }
+
+@keyframes lm-in-top { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: none; } }
+@keyframes lm-in-left { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: none; } }
+@keyframes lm-in-right { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: none; } }
