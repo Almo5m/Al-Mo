@@ -23,12 +23,11 @@
   opacity: calc(var(--p) * 0.9);
 }
 
-/* screen بيخلّي الأسود الصافي يختفي فالطبقات ما بتغطيش بعض */
+/* الشعار شفاف، فالطبقات ما بتغطيش بعض */
 .layer {
   position: absolute;
   inset: 0;
-  background: url("/logo-almo.png") center / 100% 100% no-repeat;
-  mix-blend-mode: screen;
+  background: url("/logo-full.webp") center / 100% 100% no-repeat;
 }
 
 .ring-ghost {

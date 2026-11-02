@@ -24,7 +24,10 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-grid">
-        <p className="closing">{t.closing}</p>
+        <div className="closing-col">
+          <img className="footer-logo" src="/logo-full.webp" alt="AL MO Digital Solutions" width="96" height="96" loading="lazy" />
+          <p className="closing">{t.closing}</p>
+        </div>
 
         <nav aria-label={t.sections}>
           <h4>{t.sections}</h4>

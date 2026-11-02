@@ -11,7 +11,7 @@ function loadTasks(): Promise<unknown>[] {
   const logo = new Promise<void>((res) => {
     const img = new Image();
     img.onload = img.onerror = () => res();
-    img.src = "/logo-almo.png";
+    img.src = "/logo-full.webp";
   });
   const page = new Promise<void>((res) => {
     if (document.readyState === "complete") res();

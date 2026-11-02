@@ -9,6 +9,8 @@
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: var(--s-12);
 }
+.closing-col { display: grid; align-content: start; gap: var(--s-4); }
+.footer-logo { display: block; width: 96px; height: auto; }
 .closing { margin: 0; max-width: 32ch; color: var(--text-2); font-size: 18px; line-height: 1.8; }
 .footer-grid > nav,
 .footer-grid > div { display: grid; align-content: start; gap: var(--s-3); }
@@ -32,5 +34,5 @@
 @media (max-width: 900px) {
   .footer { padding: var(--s-12) var(--s-6) var(--s-8); }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--s-8); }
-  .closing { grid-column: 1 / -1; }
+  .closing-col { grid-column: 1 / -1; }
 }
