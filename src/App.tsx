@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { applyLang, DEFAULT_LANG, type Lang } from "./i18n";
+import { applyLang, detectLang, saveLang, type Lang } from "./i18n";
 import { LangContext } from "./i18n/LangContext";
 import { scrambleTexts } from "./lib/scramble";
 import Loader from "./sections/Loader";
@@ -18,11 +18,11 @@ type Phase = "loading" | "leaving" | "done";
 
 export default function App() {
   const [phase, setPhase] = useState<Phase>("loading");
-  const [lang, setLang] = useState<Lang>(DEFAULT_LANG);
+  const [lang, setLang] = useState<Lang>(detectLang);
   const [switching, setSwitching] = useState(false);
   const appRef = useRef<HTMLDivElement>(null);
   const scrambleNext = useRef(false);
-  useEffect(() => applyLang(DEFAULT_LANG), []);
+  useEffect(() => applyLang(lang), []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // بعد ما React يرسم النصوص بالغة الجديدة، الحروف بتتحوّل وتستقر
   useEffect(() => {
@@ -43,6 +43,7 @@ export default function App() {
     if (next === lang) return;
     const apply = () => {
       applyLang(next); // الاتجاه لازم يتغيّر قبل ما المكوّنات تقيس أماكنها
+      saveLang(next); // اختيار الزائر بيتحفظ وبيغلب لغة الجهاز
       setLang(next);
     };
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

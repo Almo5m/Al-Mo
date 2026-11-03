@@ -11,6 +11,15 @@ type AboutText = {
   offline: string;
   limit: string;
   error: string;
+  handoff: string;
+  handoffTitle: string;
+  yourName: string;
+  yourEmail: string;
+  consent: string;
+  handoffSend: string;
+  cancel: string;
+  handoffOk: string;
+  handoffInvalid: string;
 };
 
 // النبذة بصوت معاذ. الترجمة الإنجليزي محتاجة مراجعته.
@@ -26,6 +35,15 @@ export const ABOUT: Record<Lang, AboutText> = {
     offline: "الرفيق لسه مش متوصّل بالسيرفر (وضع تجريبي).",
     limit: "وصلت للحد المسموح. جرّب بعد شوية.",
     error: "حصلت مشكلة. جرّب تاني.",
+    handoff: "ابعت طلبي لمعاذ",
+    handoffTitle: "بيانات التواصل",
+    yourName: "اسمك",
+    yourEmail: "إيميلك",
+    consent: "أوافق إن ملخص حواري مع الرفيق يتبعت لمعاذ عشان يتواصل معايا.",
+    handoffSend: "إرسال لمعاذ",
+    cancel: "إلغاء",
+    handoffOk: "وصل طلبك لمعاذ وهيتواصل معاك قريب.",
+    handoffInvalid: "اكتب اسمك وإيميلك صح ووافق عشان نبعت.",
   },
   en: {
     title: "About Moaz",
@@ -38,5 +56,14 @@ export const ABOUT: Record<Lang, AboutText> = {
     offline: "The companion isn't connected to the server yet (demo mode).",
     limit: "You've reached the limit. Try again in a bit.",
     error: "Something went wrong. Try again.",
+    handoff: "Send my request to Moaz",
+    handoffTitle: "Your contact details",
+    yourName: "Your name",
+    yourEmail: "Your email",
+    consent: "I agree to send a summary of my chat with the companion to Moaz so he can contact me.",
+    handoffSend: "Send to Moaz",
+    cancel: "Cancel",
+    handoffOk: "Your request reached Moaz. He'll be in touch soon.",
+    handoffInvalid: "Enter a valid name and email and agree so we can send it.",
   },
 };

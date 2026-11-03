@@ -65,3 +65,53 @@
 }
 .chat-input button:disabled { opacity: 0.4; cursor: default; }
 .chat-input button:not(:disabled):hover { border-color: var(--gold); color: var(--gold); }
+
+.msg.ok { color: var(--gold); }
+
+/* زر ولوحة "ابعت طلبي لمعاذ" */
+.handoff-btn {
+  display: block;
+  width: calc(100% - var(--s-8));
+  margin: 0 var(--s-4) var(--s-3);
+  padding: var(--s-2) var(--s-4);
+  background: none;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+  transition: box-shadow 250ms ease;
+}
+.handoff-btn:hover { box-shadow: var(--glow-gold); }
+.handoff {
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.handoff-title { margin: 0; font-family: var(--font-mono); font-size: 13px; color: var(--gold); }
+.handoff input[type="text"], .handoff input:not([type]), .handoff input[type="email"] {
+  padding: var(--s-2) var(--s-3);
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius);
+  color: var(--text);
+  font: inherit;
+  outline: 0;
+}
+.handoff input:focus { border-color: var(--gold); }
+.consent { display: flex; align-items: flex-start; gap: var(--s-2); font-size: 14px; color: var(--text-2); line-height: 1.6; }
+.consent input { margin-top: 5px; accent-color: var(--gold); }
+.handoff-actions { display: flex; gap: var(--s-3); }
+.handoff-actions button {
+  padding: var(--s-2) var(--s-6);
+  background: none;
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+.handoff-actions .primary { color: var(--gold); border-color: var(--gold); }
+.handoff-actions button:disabled { opacity: 0.5; cursor: default; }
