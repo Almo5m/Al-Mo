@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ParticleHeadline from "../components/ParticleHeadline";
 import ParticleButton from "../components/ParticleButton";
+import Robot from "../components/Robot";
 import { HERO } from "../i18n/hero";
 import { useLang } from "../i18n/LangContext";
 import "./Hero.css";
@@ -33,7 +34,9 @@ export default function Hero() {
           <ParticleButton href="#contact" variant="secondary">{t.secondary}</ParticleButton>
         </div>
       </div>
-      <div className="hero-visual" aria-hidden="true" />
+      <div className="hero-visual">
+        <Robot lookAtCursor greet listen interactive scrollHint />
+      </div>
     </section>
   );
 }

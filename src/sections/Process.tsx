@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import Robot from "../components/Robot";
 import { useLang } from "../i18n/LangContext";
 import { PROCESS } from "../i18n/sections";
 import "./Process.css";
@@ -9,18 +10,29 @@ export default function Process() {
   const t = PROCESS[useLang()];
   const ref = useRef<HTMLElement>(null);
   const [p, setP] = useState(0);
+  const [walking, setWalking] = useState(false);
+  const lastP = useRef(0);
   const [reduced] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
   useEffect(() => {
     if (reduced) return;
     let raf = 0;
+    let stopTimer = 0;
     const calc = () => {
       raf = 0;
       const el = ref.current;
       if (!el) return;
       const total = el.offsetHeight - window.innerHeight;
       const prog = total > 0 ? -el.getBoundingClientRect().top / total : 0;
-      setP(Math.min(1, Math.max(0, prog)));
+      const clamped = Math.min(1, Math.max(0, prog));
+      setP(clamped);
+      // بيمشي لما السكرول بيتحرك، ويقف بعد لحظة من آخر حركة
+      if (Math.abs(clamped - lastP.current) > 0.0004) {
+        setWalking(true);
+        clearTimeout(stopTimer);
+        stopTimer = window.setTimeout(() => setWalking(false), 220);
+      }
+      lastP.current = clamped;
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(calc);
@@ -30,11 +42,14 @@ export default function Process() {
     calc();
     return () => {
       cancelAnimationFrame(raf);
+      clearTimeout(stopTimer);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
   }, [reduced]);
 
+  const rtl = document.documentElement.dir === "rtl";
+  const facing = walking ? (rtl ? -1 : 1) * (Math.PI / 2) : 0; // بيبص ناحية اتجاه المشي
   const n = t.steps.length;
   const active = Math.min(n - 1, Math.round(p * (n - 1)));
 
@@ -64,8 +79,8 @@ export default function Process() {
           {t.steps.map((s, i) => (
             <span key={s.title} className={`node ${i <= active ? "on" : ""}`} style={{ insetInlineStart: `${(i / (n - 1)) * 100}%` }} />
           ))}
-          <span className="marker" style={{ insetInlineStart: `${p * 100}%` }} aria-hidden="true">
-            {t.companion}
+          <span className="marker" style={{ insetInlineStart: `${p * 100}%` }}>
+            <Robot ambient={false} walking={walking} facing={facing} />
           </span>
         </div>
         <div className="bubble" key={active} aria-live="polite">

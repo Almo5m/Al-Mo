@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { askCompanion, sendHandoff, CompanionError, type Msg } from "../lib/companion";
+import { robotDo } from "../lib/robotBus";
 import { useLang } from "../i18n/LangContext";
 import { ABOUT } from "../i18n/about";
 import "./CompanionChat.css";
@@ -32,12 +33,15 @@ export default function CompanionChat() {
     setText("");
     setBusy(true);
     setNote("");
+    robotDo("Think");
     try {
       const reply = await askCompanion(next);
       setMsgs([...next, { role: "assistant", content: reply || t.error }]);
+      robotDo("Talk");
     } catch (e) {
       const kind = e instanceof CompanionError ? e.kind : "error";
       setNote(kind === "offline" ? t.offline : kind === "limit" ? t.limit : t.error);
+      robotDo("Error");
     } finally {
       setBusy(false);
     }
@@ -55,8 +59,10 @@ export default function CompanionChat() {
       await sendHandoff(msgs, { name: name.trim(), email: email.trim() });
       setHStatus("ok");
       setPanel(false);
+      robotDo("Success");
     } catch (e) {
       setHStatus(e instanceof CompanionError ? e.kind : "error");
+      robotDo("Error");
     }
   }
 

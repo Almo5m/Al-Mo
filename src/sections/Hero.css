@@ -20,8 +20,9 @@
   z-index: 2;
 }
 
-/* مكان الرفيق (الروبوت) لحد ما نبنيه، مع الضوء الذهبي الخافت من الخلف */
+/* الرفيق (الروبوت) مع الضوء الذهبي الخافت من الخلف */
 .hero-visual {
+  height: min(70vh, 560px);
   min-height: 360px;
   background: radial-gradient(circle at 50% 50%, rgba(227, 176, 75, 0.12), transparent 60%);
 }
@@ -57,6 +58,7 @@
     padding: var(--s-16) var(--s-6);
   }
   .hero-visual {
+    height: 320px;
     min-height: 240px;
     order: -1;
   }

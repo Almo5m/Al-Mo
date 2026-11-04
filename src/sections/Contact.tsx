@@ -6,6 +6,7 @@ import { useLang } from "../i18n/LangContext";
 import { CONTACT } from "../i18n/sections";
 import { CONTACT_LINKS } from "../config";
 import { ContactError, sendContact } from "../lib/contact";
+import { robotDo } from "../lib/robotBus";
 import "./Contact.css";
 
 type Status = "idle" | "sending" | "ok" | "invalid" | "limit" | "error" | "offline";
@@ -26,12 +27,15 @@ export default function Contact() {
       return;
     }
     setStatus("sending");
+    robotDo("Think");
     try {
       await sendContact(f);
       setStatus("ok");
+      robotDo("Success");
       setF({ name: "", email: "", message: "", hp: "" });
     } catch (err) {
       setStatus(err instanceof ContactError ? err.kind : "error");
+      robotDo("Error");
     }
   }
 
