@@ -10,8 +10,7 @@ export const HEADER: Record<Lang, HeaderText> = {
   ar: {
     links: [
       { id: "projects", label: "المشاريع" },
-      { id: "skills", label: "المهارات" },
-      { id: "about", label: "نبذة عنك" },
+      { id: "companion", label: "الرفيق" },
       { id: "process", label: "طريقة الشغل" },
       { id: "testimonials", label: "آراء العملاء" },
     ],
@@ -21,8 +20,7 @@ export const HEADER: Record<Lang, HeaderText> = {
   en: {
     links: [
       { id: "projects", label: "Projects" },
-      { id: "skills", label: "Skills" },
-      { id: "about", label: "About" },
+      { id: "companion", label: "Companion" },
       { id: "process", label: "How we work" },
       { id: "testimonials", label: "Testimonials" },
     ],

@@ -1,0 +1,36 @@
+.companion {
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) 1fr;
+  gap: var(--s-16);
+  align-items: start;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding: var(--section-gap) var(--s-12);
+  scroll-margin-top: 64px;
+}
+/* الإطار بيثبت جنب الحوار أثناء السكرول */
+.companion-mark {
+  position: sticky;
+  top: calc(64px + var(--s-8));
+}
+.companion-body {
+  display: grid;
+  gap: var(--s-6);
+  justify-items: start;
+}
+.companion-body h2 {
+  font-size: clamp(32px, 4vw, 44px);
+  line-height: 1.2;
+}
+
+@media (max-width: 900px) {
+  .companion {
+    grid-template-columns: 1fr;
+    gap: var(--s-12);
+    padding: var(--s-16) var(--s-6);
+  }
+  .companion-mark {
+    position: static;
+    max-width: 320px;
+  }
+}

@@ -17,14 +17,13 @@ const STAGE = {
 };
 
 // حركات بتشتغل مرة وترجع للـ Idle (Point بتثبت في آخرها لحد ما نقولها ترجع)
-const ONE_SHOT = new Set(["Wave", "Point", "Success", "Error", "Surprised", "WakeUp"]);
+const ONE_SHOT = new Set(["Wave", "Point", "Success", "Error", "WakeUp"]);
 
 export type RobotOptions = {
   lookAtCursor?: boolean; // الراس تتابع المؤشر
   ambient?: boolean; // الشرارة والحلقات تحت
   greet?: boolean; // يصحى ويسلّم أول ما يظهر
   listen?: boolean; // يسمع أحداث robotDo
-  interactive?: boolean; // الضغط عليه بيفاجئه
   scrollHint?: boolean; // لو الزائر ساكت فوق، يشاور لتحت
 };
 
@@ -176,8 +175,6 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
   }
 
   const offBus = opts.listen && !reduced ? onRobot(play) : () => {};
-  const onDown = () => play("Surprised");
-  if (opts.interactive && !reduced) canvas.addEventListener("pointerdown", onDown);
 
   // لو الزائر ساكت فوق بعد فترة، الرفيق يشاور لتحت
   let hintTimer = 0;
@@ -284,7 +281,6 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
       window.removeEventListener("pointermove", onPointer);
       document.documentElement.removeEventListener("pointerleave", onLeave);
       window.removeEventListener("scroll", onScroll);
-      canvas.removeEventListener("pointerdown", onDown);
       mixer.stopAllAction();
       // الهندسة والخامات مشتركة بين النسخ فمش بنمسحها، بنمسح بس اللي بتاعنا
       envTexture.dispose();

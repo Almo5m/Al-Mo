@@ -1,7 +1,7 @@
 import { PERSONA, SUMMARY_PROMPT } from "./persona.ts";
 import { askModel, type Msg } from "./providers.ts";
 import { notify } from "../_shared/notify.ts";
-import { allowed, clientId, db, guard, json } from "../_shared/http.ts";
+import { allowed, clientId, db, guard, json, serve } from "../_shared/http.ts";
 
 function validMessages(x: unknown): x is Msg[] {
   return (
@@ -11,7 +11,7 @@ function validMessages(x: unknown): x is Msg[] {
   );
 }
 
-Deno.serve(async (req) => {
+serve(async (req) => {
   const early = guard(req);
   if (early) return early;
 
@@ -27,7 +27,7 @@ Deno.serve(async (req) => {
 
     if (!isHandoff) return json({ reply: await askModel(PERSONA, body.messages) });
 
-    // إرسال الطلب لمعاذ: لازم موافقة صريحة وبيانات تواصل
+    // إرسال الطلب: لازم موافقة صريحة وبيانات تواصل
     const { consent, contact } = body;
     const name = String(contact?.name ?? "").trim();
     const email = String(contact?.email ?? "").trim();
@@ -38,7 +38,7 @@ Deno.serve(async (req) => {
 
     const summary = (await askModel(SUMMARY_PROMPT, [
       ...body.messages,
-      { role: "user", content: "لخّص الحوار ده لمعاذ." },
+      { role: "user", content: "لخّص الحوار ده." },
     ])).slice(0, 4000);
 
     const { error } = await db.from("contact_requests").insert({ name, email, summary });

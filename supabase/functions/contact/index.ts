@@ -1,8 +1,8 @@
 import { notify } from "../_shared/notify.ts";
-import { allowed, clientId, db, guard, json } from "../_shared/http.ts";
+import { allowed, clientId, db, guard, json, serve } from "../_shared/http.ts";
 
 // فورم التواصل: تحقق، حد 3 رسائل في الساعة، وفخ للبوتات (hp)
-Deno.serve(async (req) => {
+serve(async (req) => {
   const early = guard(req);
   if (early) return early;
 

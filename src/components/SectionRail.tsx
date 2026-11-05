@@ -4,7 +4,7 @@ import { HEADER } from "../i18n/header";
 import { FOOTER } from "../i18n/sections";
 import "./SectionRail.css";
 
-const IDS = ["top", "projects", "skills", "about", "process", "testimonials", "contact"];
+const IDS = ["top", "projects", "companion", "process", "testimonials", "contact"];
 
 // كمبيوتر وتابلت: نقاط أقسام جانبية بتلمع عند القسم الحالي. موبايل: خط تقدم رفيع.
 export default function SectionRail() {

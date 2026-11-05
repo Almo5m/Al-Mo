@@ -1,94 +1,114 @@
-@property --a {
+/* توقيت شاشة التحميل (بالثواني). عدّل القيم دي بس لو عايز تبطّأ أو تسرّع حاجة.
+   الحلقة 0.25 → 2.05 · المكعب 0.9 → 2.4 · الاسم 2.3 → 3.2 · الوصف 2.8 → 3.6
+   الحركة مش بتبدأ غير لما الـ Loader يضيف class "play" (بعد ما صورة الشعار تتحمّل). */
+@property --sweep {
   syntax: "<angle>";
   inherits: false;
-  initial-value: 360deg;
+  initial-value: 0deg;
 }
 
-.logo {
-  --size: min(72vmin, 520px);
+.asm {
+  --size: min(62vmin, 500px);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  /* قناع حلقي بيحدد مكان الحلقة الذهبية بس */
+  --annulus: radial-gradient(
+    circle at 49.7% 48.6%,
+    transparent calc(var(--size) * 0.427),
+    #000 calc(var(--size) * 0.43),
+    #000 calc(var(--size) * 0.458),
+    transparent calc(var(--size) * 0.461)
+  );
   position: relative;
   width: var(--size);
   aspect-ratio: 1;
 }
 
-/* توهج خفيف ورا الشعار (مش filter عشان ما نكسرش الدمج) */
-.logo::before {
-  content: "";
-  position: absolute;
-  inset: -12%;
-  background: radial-gradient(circle, rgba(227, 176, 75, 0.22), transparent 62%);
-  animation: glow 900ms ease-out calc(var(--d) + 1500ms) both;
-}
-
-/* screen بيخلّي الأسود الصافي يختفي، فالطبقات ما بتغطيش بعض أثناء الحركة */
-.layer {
+.asm-layer {
   position: absolute;
   inset: 0;
-  background: url("/logo-almo.png") center / 100% 100% no-repeat;
-  mix-blend-mode: screen;
+  background: url("/logo-full.webp") center / 100% 100% no-repeat;
 }
 
-/* الحلقة: بتترسم باتجاه عقارب الساعة (قناع حلقي × قناع دائري بيتفتح) */
-.ring {
-  --a: 0deg;
-  -webkit-mask-image:
-    radial-gradient(circle at 49.7% 48.6%, transparent calc(var(--size) * 0.427), #000 calc(var(--size) * 0.43), #000 calc(var(--size) * 0.458), transparent calc(var(--size) * 0.461)),
-    conic-gradient(from -90deg at 49.7% 48.6%, #000 var(--a), transparent var(--a));
-  mask-image:
-    radial-gradient(circle at 49.7% 48.6%, transparent calc(var(--size) * 0.427), #000 calc(var(--size) * 0.43), #000 calc(var(--size) * 0.458), transparent calc(var(--size) * 0.461)),
-    conic-gradient(from -90deg at 49.7% 48.6%, #000 var(--a), transparent var(--a));
+/* ---- الحالة الأولى: كل حاجة مخفية ---- */
+.asm-glow {
+  position: absolute;
+  inset: -14%;
+  background: radial-gradient(circle, rgba(227, 176, 75, 0.2), transparent 62%);
+  opacity: 0;
+}
+.asm-ring {
+  --sweep: 0deg;
+  -webkit-mask-image: var(--annulus), conic-gradient(from -90deg at 49.7% 48.6%, #000 var(--sweep), transparent var(--sweep));
+  mask-image: var(--annulus), conic-gradient(from -90deg at 49.7% 48.6%, #000 var(--sweep), transparent var(--sweep));
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
-  animation: draw 700ms cubic-bezier(0.4, 0, 0.2, 1) var(--d) both;
+}
+/* المكعب: نفس مكانه في الشعار الأصلي بالظبط */
+.asm-cube {
+  position: absolute;
+  left: 31.82%;
+  top: 16.67%;
+  width: 36.12%;
+  height: 42.58%;
+  aspect-ratio: auto;
+}
+.asm-cube .lm-face {
+  opacity: 0;
+  /* قيم الـ transform جوه الـ SVG بتتحسب بوحدات الرسمة (664 عرض)، فالمسافات أكبر من اللي تتخيله */
+  transform-box: fill-box;
+  transform-origin: center;
+}
+/* الاسم والوصف بيتفتحوا من النص للأطراف (كل سطر ليه مكانه في صورة الشعار) */
+.asm-name {
+  opacity: 0;
+  clip-path: inset(61.5% 50% 27.5% 50%);
+}
+.asm-sub {
+  opacity: 0;
+  clip-path: inset(72.8% 50% 21.5% 50%);
 }
 
-.face {
-  animation-duration: 650ms;
-  animation-timing-function: cubic-bezier(0.2, 0.9, 0.25, 1);
-  animation-fill-mode: both;
+/* ---- الحركة ---- */
+.asm.play .asm-glow { animation: asm-glow 2.4s ease-out 0.3s forwards; }
+.asm.play .asm-ring { animation: asm-ring 1.8s var(--ease-io) 0.25s forwards; }
+.asm.play .asm-cube { animation: asm-cube-pulse 0.9s ease-in-out 2.2s both; }
+.asm.play .asm-cube .lm-face {
+  animation-duration: 1.1s;
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: forwards;
 }
-.top {
-  clip-path: polygon(33.3% 25.7%, 49.9% 15.6%, 66.6% 25.7%, 49.9% 36.3%);
-  animation-name: from-top;
-  animation-delay: calc(var(--d) + 200ms);
-}
-.left {
-  clip-path: polygon(31.3% 26.7%, 50.2% 37.3%, 50.2% 60%, 31.3% 49.8%);
-  animation-name: from-left;
-  animation-delay: calc(var(--d) + 320ms);
-}
-.right {
-  clip-path: polygon(50.1% 37.3%, 68.7% 26.7%, 68.7% 50.1%, 50.1% 60%);
-  animation-name: from-right;
-  animation-delay: calc(var(--d) + 440ms);
-}
-.word {
-  clip-path: polygon(19% 61%, 81% 61%, 81% 78%, 19% 78%);
-  animation: word-in 500ms ease-out calc(var(--d) + 900ms) both;
-}
+.asm.play .asm-cube .lm-top { animation-name: asm-in-top; animation-delay: 0.9s; }
+.asm.play .asm-cube .lm-left { animation-name: asm-in-left; animation-delay: 1.1s; }
+.asm.play .asm-cube .lm-right { animation-name: asm-in-right; animation-delay: 1.3s; }
+.asm.play .asm-name { animation: asm-name 0.9s var(--ease-out) 2.3s forwards; }
+.asm.play .asm-sub { animation: asm-sub 0.8s var(--ease-out) 2.8s forwards; }
 
-@keyframes draw {
-  from { --a: 0deg; }
-  to { --a: 361deg; }
+@keyframes asm-glow {
+  to { opacity: 0.9; }
 }
-@keyframes from-top {
-  from { opacity: 0; transform: perspective(900px) translateY(-16%) rotateX(40deg) scale(0.92); }
-  to { opacity: 1; transform: none; }
+@keyframes asm-ring {
+  to { --sweep: 361deg; }
 }
-@keyframes from-left {
-  from { opacity: 0; transform: perspective(900px) translateX(-18%) rotateY(-35deg) scale(0.92); }
-  to { opacity: 1; transform: none; }
+@keyframes asm-in-top {
+  from { opacity: 0; transform: translateY(-220px) scale(0.92); filter: blur(14px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
 }
-@keyframes from-right {
-  from { opacity: 0; transform: perspective(900px) translateX(18%) rotateY(35deg) scale(0.92); }
-  to { opacity: 1; transform: none; }
+@keyframes asm-in-left {
+  from { opacity: 0; transform: translateX(-220px) scale(0.92); filter: blur(14px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
 }
-@keyframes word-in {
-  from { opacity: 0; transform: translateY(6%); filter: blur(6px); }
-  to { opacity: 1; transform: none; filter: none; }
+@keyframes asm-in-right {
+  from { opacity: 0; transform: translateX(220px) scale(0.92); filter: blur(14px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
 }
-@keyframes glow {
-  0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0.55; }
+/* لمعة هادية بعد ما المكعب يكتمل */
+@keyframes asm-cube-pulse {
+  50% { filter: brightness(1.28); }
+}
+@keyframes asm-name {
+  to { opacity: 1; clip-path: inset(61.5% 20% 27.5% 20%); }
+}
+@keyframes asm-sub {
+  to { opacity: 1; clip-path: inset(72.8% 19% 21.5% 19%); }
 }

@@ -1,29 +1,33 @@
 import { useEffect, useRef, useState } from "react";
-import LogoProgress from "../components/LogoProgress";
+import LogoAssemble from "../components/LogoAssemble";
 import "./Loader.css";
 
-const MIN_MS = 3500; // أقل مدة قبل ما العدّاد يوصل 100 (حتى لو النت سريع)
-const HOLD_MS = 500; // وقفة بعد 100، يعني الإجمالي 4 ثواني
+const MIN_MS = 3600; // مدة تركيب الشعار (شوف LogoAssemble.css). الشاشة ما بتخلصش قبلها حتى لو النت سريع
+const HOLD_MS = 400; // وقفة بعد ما الشعار يكتمل، يعني الإجمالي 4 ثواني
 
-// الرقم حقيقي: كل مهمة بتخلص بتزوّد النسبة. الإيقاع بس هو اللي بيتبطّأ لحد الحد الأدنى.
-function loadTasks(): Promise<unknown>[] {
+// الخط الرفيع تحت الشعار حقيقي: كل مهمة تحميل بتخلص بتزوّد النسبة. الإيقاع بس هو اللي بيتبطّأ لحد الحد الأدنى.
+function loadTasks(): { tasks: Promise<unknown>[]; logo: Promise<void> } {
   const font = (spec: string, text: string) => document.fonts.load(spec, text).catch(() => undefined);
   const logo = new Promise<void>((res) => {
     const img = new Image();
     img.onload = img.onerror = () => res();
     img.src = "/logo-full.webp";
+    window.setTimeout(res, 2000); // لو الصورة اتأخرت نكمّل برضو
   });
   const page = new Promise<void>((res) => {
     if (document.readyState === "complete") res();
     else window.addEventListener("load", () => res(), { once: true });
   });
-  return [
-    font("700 56px Cairo", "مشروع Project"),
-    font("500 56px 'Space Grotesk'", "Project 0123"),
-    font("400 20px 'IBM Plex Sans Arabic'", "بنبني we build"),
+  return {
     logo,
-    page,
-  ];
+    tasks: [
+      font("700 56px Cairo", "مشروع Project"),
+      font("500 56px 'Space Grotesk'", "Project 0123"),
+      font("400 20px 'IBM Plex Sans Arabic'", "بنبني we build"),
+      logo,
+      page,
+    ],
+  };
 }
 
 // الشاشة بتظهر لكل زائر كل مرة. الاستثناء الوحيد: اللي مفعّل "تقليل الحركة" في جهازه.
@@ -33,8 +37,8 @@ function shouldSkip(): boolean {
 
 export default function Loader({ onDone, leaving = false }: { onDone: () => void; leaving?: boolean }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const countRef = useRef<HTMLSpanElement>(null);
   const [complete, setComplete] = useState(false);
+  const [play, setPlay] = useState(false); // الحركة بتبدأ بعد ما صورة الشعار تتحمّل
 
   const finish = () => onDone();
 
@@ -43,15 +47,16 @@ export default function Loader({ onDone, leaving = false }: { onDone: () => void
       onDone();
       return;
     }
-    const tasks = loadTasks();
+    const { tasks, logo } = loadTasks();
     let done = 0;
     tasks.forEach((p) => p.then(() => done++, () => done++));
 
-    const t0 = performance.now();
     let shown = 0;
     let raf = 0;
     let hold = 0;
     let ended = false;
+    let cancelled = false;
+    let t0 = 0;
 
     const tick = (now: number) => {
       const t = Math.min(1, (now - t0) / MIN_MS);
@@ -61,7 +66,6 @@ export default function Loader({ onDone, leaving = false }: { onDone: () => void
       if (target >= 1 && shown > 0.995) shown = 1;
 
       rootRef.current?.style.setProperty("--p", shown.toFixed(4));
-      if (countRef.current) countRef.current.textContent = String(Math.round(shown * 100)).padStart(2, "0");
 
       if (shown >= 1) {
         if (!ended) {
@@ -73,9 +77,16 @@ export default function Loader({ onDone, leaving = false }: { onDone: () => void
       }
       raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
+
+    logo.then(() => {
+      if (cancelled) return;
+      setPlay(true);
+      t0 = performance.now();
+      raf = requestAnimationFrame(tick);
+    });
 
     return () => {
+      cancelled = true;
       cancelAnimationFrame(raf);
       clearTimeout(hold);
     };
@@ -84,15 +95,9 @@ export default function Loader({ onDone, leaving = false }: { onDone: () => void
 
   return (
     <div ref={rootRef} className={`loader ${complete ? "complete" : ""} ${leaving ? "leaving" : ""}`}>
-      <LogoProgress />
-      <div className="meter" dir="ltr">
-        <span className="count">
-          <span ref={countRef}>00</span>
-          <i>%</i>
-        </span>
-        <div className="bar">
-          <span />
-        </div>
+      <LogoAssemble play={play} />
+      <div className="meter" aria-hidden="true">
+        <span />
       </div>
     </div>
   );

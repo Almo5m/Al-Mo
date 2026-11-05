@@ -35,7 +35,7 @@ export default function Hero() {
         </div>
       </div>
       <div className="hero-visual">
-        <Robot lookAtCursor greet listen interactive scrollHint />
+        <Robot lookAtCursor greet listen scrollHint />
       </div>
     </section>
   );

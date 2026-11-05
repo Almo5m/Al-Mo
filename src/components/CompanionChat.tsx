@@ -2,14 +2,14 @@ import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent } fro
 import { askCompanion, sendHandoff, CompanionError, type Msg } from "../lib/companion";
 import { robotDo } from "../lib/robotBus";
 import { useLang } from "../i18n/LangContext";
-import { ABOUT } from "../i18n/about";
+import { COMPANION } from "../i18n/companion";
 import "./CompanionChat.css";
 
 type HStatus = "idle" | "sending" | "ok" | "invalid" | "limit" | "error" | "offline";
 
-// حوار مفتوح مع الرفيق + زر "ابعت طلبي لمعاذ" بموافقة صريحة. الرسالة الأولى للعرض بس (مش بتتبعت للسيرفر).
+// حوار مفتوح مع الرفيق + زر "ابعت طلبي" بموافقة صريحة. الرسالة الأولى للعرض بس (مش بتتبعت للسيرفر).
 export default function CompanionChat() {
-  const t = ABOUT[useLang()];
+  const t = COMPANION[useLang()];
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);

@@ -1,33 +1,7 @@
 import type { Lang } from "./index";
 
-// المهارات وخطوات الشغل ورسالة الـ Footer بصوت معاذ (الترجمة الإنجليزي محتاجة مراجعته).
+// خطوات الشغل ورسالة الـ Footer والتواصل (الترجمة الإنجليزي محتاجة مراجعة).
 // لسه مؤقت: المشاريع والآراء.
-
-// المهارات بصوت معاذ. icon = رقم الأيقونة المخصصة (SkillIcon).
-export const SKILLS: Record<Lang, { title: string; hint: string; close: string; items: { name: string; detail: string; icon: number }[] }> = {
-  ar: {
-    title: "المهارات",
-    hint: "اضغط على أي مهارة",
-    close: "إغلاق",
-    items: [
-      { name: "Python", detail: "عندي أساس قوي في Python.", icon: 3 },
-      { name: "Supabase", detail: "عندي خبرة مع Supabase.", icon: 1 },
-      { name: "Vercel", detail: "عندي خبرة مع Vercel.", icon: 2 },
-      { name: "React · Next.js · Vite", detail: "عندي مشاريع بيهم وفاهمهم، بس مش خبير فيهم قوي.", icon: 0 },
-    ],
-  },
-  en: {
-    title: "Skills",
-    hint: "Tap any skill",
-    close: "Close",
-    items: [
-      { name: "Python", detail: "I have a strong foundation in Python.", icon: 3 },
-      { name: "Supabase", detail: "I have hands-on experience with Supabase.", icon: 1 },
-      { name: "Vercel", detail: "I have hands-on experience with Vercel.", icon: 2 },
-      { name: "React · Next.js · Vite", detail: "I've built projects with them and understand them well, but I'm not an expert yet.", icon: 0 },
-    ],
-  },
-};
 
 // بيانات المشاريع (مش نصوص): التقنيات ولينك الديمو. لينك فاضي = "الديمو قريبًا".
 export const PROJECTS_DATA: { id: string; tags: string[]; demoUrl: string }[] = [
@@ -134,11 +108,11 @@ export const CONTACT: Record<Lang, {
     send: "إرسال",
     sending: "بيتبعت...",
     companion: "الرفيق",
-    ok: "وصلت رسالتك لمعاذ. هيرد عليك قريب.",
+    ok: "وصلت رسالتك. هنرد عليك قريب.",
     invalid: "راجع البيانات: الاسم والإيميل والرسالة كلهم لازم يتملّوا.",
     limit: "بعتّ رسايل كتير. جرّب بعد شوية.",
     error: "حصلت مشكلة وماتبعتتش. جرّب تاني.",
-    offline: "الفورم لسه مش متوصّل بالسيرفر (وضع تجريبي).",
+    offline: "الفورم مش شغال دلوقتي. تقدر تكلّمنا مباشرة من قنوات التواصل.",
     orTalk: "أو كلّم الرفيق",
     talk: "افتح الحوار",
     whatsapp: "واتساب",
@@ -154,11 +128,11 @@ export const CONTACT: Record<Lang, {
     send: "Send",
     sending: "sending...",
     companion: "Companion",
-    ok: "Your message reached Moaz. He'll reply soon.",
+    ok: "Your message was received. We'll reply soon.",
     invalid: "Check the fields: name, email and message are all required.",
     limit: "You sent too many messages. Try again in a bit.",
     error: "Something went wrong and it wasn't sent. Try again.",
-    offline: "The form isn't connected to the server yet (demo mode).",
+    offline: "The form isn't working right now. You can reach us directly through the contact channels.",
     orTalk: "Or talk to the companion",
     talk: "Open the chat",
     whatsapp: "WhatsApp",
@@ -178,7 +152,7 @@ export const FOOTER: Record<Lang, {
     legal: "قانوني",
     privacy: "الخصوصية",
     license: "حقوق الملكية",
-    rights: "© 2026 معاذ · AL MO Digital Solutions",
+    rights: "© 2026 AL MO Digital Solutions",
     home: "الرئيسية",
   },
   en: {
@@ -188,7 +162,7 @@ export const FOOTER: Record<Lang, {
     legal: "Legal",
     privacy: "Privacy",
     license: "Ownership",
-    rights: "© 2026 Moaz · AL MO Digital Solutions",
+    rights: "© 2026 AL MO Digital Solutions",
     home: "Home",
   },
 };

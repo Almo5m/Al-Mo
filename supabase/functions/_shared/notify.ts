@@ -22,6 +22,6 @@ async function sendEmail(text: string) {
   await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
-    body: JSON.stringify({ from, to, subject: "طلب جديد من البورتفوليو", text }),
+    body: JSON.stringify({ from, to, subject: "طلب جديد من موقع AL MO", text }),
   });
 }

@@ -1,12 +1,13 @@
-import { useState } from "react";
+import LogoMark from "./LogoMark";
 import "./RuneFrame.css";
 
-// صورتك داخل إطار Rune. حط صورتك في public/me.jpg، ولحد وقتها بتظهر صورة مؤقتة.
+// إطار Rune بيحيط بمكعب الشعار.
 export default function RuneFrame() {
-  const [src, setSrc] = useState("/me.jpg");
   return (
     <div className="frame">
-      <img src={src} alt="" onError={() => src !== "/me-placeholder.svg" && setSrc("/me-placeholder.svg")} />
+      <div className="frame-mark">
+        <LogoMark />
+      </div>
       <svg viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true">
         <polygon
           className="edge"

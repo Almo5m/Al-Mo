@@ -1,5 +1,5 @@
 // أي مكوّن يقدر يطلب حركة من الروبوت بـ robotDo("Think") مثلًا، والروبوت بيسمع ويشغّلها.
-export type RobotAction = "Idle" | "Wave" | "Point" | "Talk" | "Think" | "Success" | "Error" | "Surprised" | "WakeUp";
+export type RobotAction = "Idle" | "Wave" | "Point" | "Talk" | "Think" | "Success" | "Error" | "WakeUp";
 
 const EVENT = "almo-robot";
 

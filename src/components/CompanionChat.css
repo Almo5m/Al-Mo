@@ -68,7 +68,7 @@
 
 .msg.ok { color: var(--gold); }
 
-/* زر ولوحة "ابعت طلبي لمعاذ" */
+/* زر ولوحة "ابعت طلبي" */
 .handoff-btn {
   display: block;
   width: calc(100% - var(--s-8));

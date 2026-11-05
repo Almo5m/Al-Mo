@@ -6,8 +6,7 @@ import Loader from "./sections/Loader";
 import Header from "./sections/Header";
 import Hero from "./sections/Hero";
 import Projects from "./sections/Projects";
-import Skills from "./sections/Skills";
-import About from "./sections/About";
+import Companion from "./sections/Companion";
 import Process from "./sections/Process";
 import Testimonials from "./sections/Testimonials";
 import Contact from "./sections/Contact";
@@ -67,8 +66,7 @@ export default function App() {
             <main>
               <Hero />
               <Projects />
-              <Skills />
-              <About />
+              <Companion />
               <Process />
               <Testimonials />
               <Contact />

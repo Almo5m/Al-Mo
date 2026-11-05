@@ -1,21 +1,16 @@
-import type { CSSProperties } from "react";
+import LogoMark from "./LogoMark";
 import "./LogoAssemble.css";
 
-// الشعار متقسّم لطبقات (حلقة، 3 أوجه، الاسم) كلها من نفس الصورة، وكل طبقة بتتحرك لوحدها.
-// delay: بالملي ثانية قبل ما التركيب يبدأ.
-export default function LogoAssemble({ delay = 0 }: { delay?: number }) {
+// الشعار بيتركّب من العدم: الحلقة بتترسم، أوجه المكعب بتتجمّع، وبعدها الاسم والوصف بيظهروا تحته.
+// الحركة كلها بالـ CSS ومرتبطة بتوقيت واحد (شوف LogoAssemble.css). play = ابدأ الحركة.
+export default function LogoAssemble({ play }: { play: boolean }) {
   return (
-    <div
-      className="logo"
-      style={{ "--d": `${delay}ms` } as CSSProperties}
-      role="img"
-      aria-label="AL MO Digital Solutions"
-    >
-      <div className="layer ring" />
-      <div className="layer face top" />
-      <div className="layer face left" />
-      <div className="layer face right" />
-      <div className="layer word" />
+    <div className={`asm ${play ? "play" : ""}`} role="img" aria-label="AL MO Digital Solutions">
+      <div className="asm-glow" />
+      <div className="asm-layer asm-ring" />
+      <LogoMark className="asm-cube" />
+      <div className="asm-layer asm-name" />
+      <div className="asm-layer asm-sub" />
     </div>
   );
 }

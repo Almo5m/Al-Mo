@@ -94,7 +94,7 @@ export default function Contact() {
             </div>
             <div className="companion-card">
               <p>{t.orTalk}</p>
-              <a href="#about" className="channel">{t.talk}</a>
+              <a href="#companion" className="channel">{t.talk}</a>
             </div>
           </aside>
         </Reveal>
