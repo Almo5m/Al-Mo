@@ -128,9 +128,14 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
   }
 
   // ---- الراس تتابع المؤشر (إضافة فوق الحركة، مش بتتعارض معاها) ----
+  // مهم: الـ mixer مش بيكتب على الراس في الإطارات اللي قيمة الأنيميشن فيها ثابتة (three.js بيتخطى الكتابة لو القيمة ما اتغيّرتش).
+  // فلو ضفنا الميل فوق الراس كل إطار من غير ما نشيل اللي ضفناه قبله، الميل بيتراكم والراس بتلف بجنون.
+  // الحل: نشيل ميل الإطار اللي فات قبل الـ mixer، ونضيف ميل الإطار الحالي بعده.
   const head = root.getObjectByName("Head");
-  const lookQ = new THREE.Quaternion();
+  const lookQ = new THREE.Quaternion(); // الميل المضاف حاليًا على الراس
+  const lookInv = new THREE.Quaternion();
   const lookE = new THREE.Euler();
+  let lookApplied = false;
   let yaw = 0, pitch = 0, targetYaw = 0, targetPitch = 0;
   const onPointer = (e: PointerEvent) => {
     const r = canvas.getBoundingClientRect();
@@ -139,7 +144,15 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
     targetYaw = THREE.MathUtils.clamp(dx, -1, 1) * 0.65;
     targetPitch = THREE.MathUtils.clamp(dy, -1, 1) * 0.35;
   };
-  if (opts.lookAtCursor && !reduced) window.addEventListener("pointermove", onPointer);
+  // لو المؤشر خرج من الصفحة الراس ترجع قدّام
+  const onLeave = () => {
+    targetYaw = 0;
+    targetPitch = 0;
+  };
+  if (opts.lookAtCursor && !reduced) {
+    window.addEventListener("pointermove", onPointer);
+    document.documentElement.addEventListener("pointerleave", onLeave);
+  }
 
   let faceTarget = 0;
   let walking = false;
@@ -192,14 +205,23 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
     raf = requestAnimationFrame(frame);
     const dt = Math.min((now - last) / 1000, 0.1);
     last = now;
+    // 1) نشيل ميل الإطار اللي فات عشان الراس ترجع لقيمة الأنيميشن النضيفة
+    if (head && lookApplied) {
+      head.quaternion.multiply(lookInv.copy(lookQ).invert());
+      lookApplied = false;
+    }
     mixer.update(dt);
 
-    root.rotation.y += (faceTarget - root.rotation.y) * 0.12;
+    root.rotation.y += (faceTarget - root.rotation.y) * (1 - Math.pow(1 - 0.12, dt * 60));
     if (head && opts.lookAtCursor) {
-      yaw += (targetYaw - yaw) * 0.08;
-      pitch += (targetPitch - pitch) * 0.08;
+      // تنعيم مربوط بالزمن (مش بعدد الإطارات) عشان السرعة تبقى واحدة على أي جهاز
+      const k = 1 - Math.pow(1 - 0.08, dt * 60);
+      yaw += (targetYaw - yaw) * k;
+      pitch += (targetPitch - pitch) * k;
+      // 2) نضيف ميل الإطار الحالي فوق قيمة الأنيميشن
       lookQ.setFromEuler(lookE.set(pitch, yaw, 0));
-      head.quaternion.multiply(lookQ);
+      head.quaternion.multiply(lookQ).normalize();
+      lookApplied = true;
     }
     renderer.render(scene, camera);
 
@@ -260,6 +282,7 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
       ro.disconnect();
       offBus();
       window.removeEventListener("pointermove", onPointer);
+      document.documentElement.removeEventListener("pointerleave", onLeave);
       window.removeEventListener("scroll", onScroll);
       canvas.removeEventListener("pointerdown", onDown);
       mixer.stopAllAction();
