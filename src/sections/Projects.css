@@ -6,3 +6,11 @@
 @media (max-width: 900px) {
   .cards { grid-template-columns: 1fr; }
 }
+
+/* لو فيه مشروع واحد بس، الكارت بياخد عرض مريح في النص بدل ما يبقى نص الصفحة */
+.cards > :only-child {
+  grid-column: 1 / -1;
+  max-width: 760px;
+  margin-inline: auto;
+  width: 100%;
+}

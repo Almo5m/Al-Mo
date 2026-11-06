@@ -8,7 +8,7 @@
   display: grid;
   gap: var(--s-3);
   padding: var(--s-6);
-  background: #0a0a0a;
+  background: var(--surface);
   border: 1px solid transparent;
   border-radius: var(--radius);
   transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));

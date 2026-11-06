@@ -23,7 +23,7 @@
   height: 10px;
   border-radius: 50%;
   border: 1px solid var(--text-2);
-  background: #000;
+  background: var(--bg);
   transform: translate(calc(var(--dir) * 50%), -50%);
   transition: border-color 250ms ease, background 250ms ease;
 }
@@ -44,7 +44,7 @@
   gap: var(--s-2);
   width: min(560px, 100%);
   padding: var(--s-6);
-  background: #0a0a0a;
+  background: var(--surface);
   border: 1px solid var(--gold);
   border-radius: var(--radius);
   animation: bubble-in 450ms ease both;

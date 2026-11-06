@@ -7,7 +7,7 @@
   grid-template-rows: auto 1fr;
   width: min(760px, calc(100vw - 48px));
   height: min(72vh, 640px);
-  background: #050505;
+  background: var(--surface-deep);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--radius);
   overflow: hidden;
@@ -48,7 +48,7 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: #000;
+  background: var(--bg);
   color: var(--gold);
   border: 1px solid var(--gold);
   box-shadow: var(--glow-gold);

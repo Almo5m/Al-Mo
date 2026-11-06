@@ -3,11 +3,14 @@ import { askModel, type Msg } from "./providers.ts";
 import { notify } from "../_shared/notify.ts";
 import { allowed, clientId, db, guard, json, serve } from "../_shared/http.ts";
 
+// رسالة الزائر لحد 1000 حرف، ورد الرفيق (اللي بيرجع في سجل الحوار) لحد 4000 حرف،
+// عشان رد طويل شوية ما يخلّيش الرسالة اللي بعده تترفض.
 function validMessages(x: unknown): x is Msg[] {
   return (
     Array.isArray(x) && x.length > 0 && x.length <= 20 &&
     x.every((m) => (m?.role === "user" || m?.role === "assistant") &&
-      typeof m.content === "string" && m.content.length > 0 && m.content.length <= 1000)
+      typeof m.content === "string" && m.content.length > 0 &&
+      m.content.length <= (m.role === "user" ? 1000 : 4000))
   );
 }
 

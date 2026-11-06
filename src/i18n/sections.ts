@@ -1,13 +1,12 @@
 import type { Lang } from "./index";
 
 // خطوات الشغل ورسالة الـ Footer والتواصل (الترجمة الإنجليزي محتاجة مراجعة).
-// لسه مؤقت: المشاريع والآراء.
+// لسه مؤقت: الآراء.
 
 // بيانات المشاريع (مش نصوص): التقنيات ولينك الديمو. لينك فاضي = "الديمو قريبًا".
+// المشروع الجديد بيتضاف هنا (id جديد + تقنياته + لينك الديمو) ونصوصه في PROJECTS تحت بنفس الترتيب.
 export const PROJECTS_DATA: { id: string; tags: string[]; demoUrl: string }[] = [
-  { id: "p1", tags: ["React", "Supabase"], demoUrl: "" },
-  { id: "p2", tags: ["Python", "MCP"], demoUrl: "" },
-  { id: "p3", tags: ["Flutter"], demoUrl: "" },
+  { id: "spare-parts", tags: ["React", "TypeScript", "Supabase", "PWA"], demoUrl: "https://almo5m.github.io/spare-parts-demo/" },
 ];
 
 export const PROJECTS: Record<Lang, {
@@ -26,9 +25,11 @@ export const PROJECTS: Record<Lang, {
     newTab: "افتح في تبويب جديد",
     close: "إغلاق",
     items: [
-      { title: "[اسم المشروع 1]", desc: "[وصف قصير للمشروع]", impact: "[الأثر أو النتيجة]" },
-      { title: "[اسم المشروع 2]", desc: "[وصف قصير للمشروع]", impact: "[الأثر أو النتيجة]" },
-      { title: "[اسم المشروع 3]", desc: "[وصف قصير للمشروع]", impact: "[الأثر أو النتيجة]" },
+      {
+        title: "نظام إدارة مخزن قطع غيار السيارات",
+        desc: "نظام لإدارة المخزون والمبيعات والمشتريات: فواتير بيع من أكتر من مخزن، طلبيات شراء، مرتجعات، جرد، وكشوف حساب للعملاء.",
+        impact: "أرباح دقيقة مش تقريبية: كل عملية شراء بتتسجل كدفعة لوحدها والبيع بيسحب من أقدم دفعة (FIFO)، فبتعرف ربح كل قطعة بالظبط.",
+      },
     ],
   },
   en: {
@@ -42,9 +43,11 @@ export const PROJECTS: Record<Lang, {
     newTab: "Open in a new tab",
     close: "Close",
     items: [
-      { title: "[Project 1 name]", desc: "[Short project description]", impact: "[Impact or result]" },
-      { title: "[Project 2 name]", desc: "[Short project description]", impact: "[Impact or result]" },
-      { title: "[Project 3 name]", desc: "[Short project description]", impact: "[Impact or result]" },
+      {
+        title: "Auto spare parts inventory system",
+        desc: "A system for managing stock, sales and purchasing: multi-warehouse sales invoices, purchase orders, returns, stocktaking, and customer statements.",
+        impact: "Accurate profit, not estimates: every purchase is tracked as its own lot and sales draw from the oldest lot first (FIFO), so the profit on each item is exact.",
+      },
     ],
   },
 };

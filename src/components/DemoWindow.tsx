@@ -31,11 +31,11 @@ export default function DemoWindow({ title, url, labels, onClose }: Props) {
             <button type="button" aria-label={labels.close} onClick={onClose}>×</button>
           </div>
         </div>
-        {/* الديمو لازم يتستضاف على دومين مختلف ببيانات تجريبية بس */}
+        {/* الديمو لازم يتستضاف على دومين مختلف ببيانات تجريبية بس. allow-downloads و allow-modals عشان تصدير Excel وطباعة الفاتورة شغالين جواه. */}
         <iframe
           src={url}
           title={title}
-          sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+          sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-downloads allow-modals"
           referrerPolicy="no-referrer"
           loading="lazy"
         />
