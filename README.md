@@ -32,7 +32,7 @@ supabase functions deploy contact
 src/                الواجهة (sections, components, companion, i18n, styles)
 supabase/           الجداول والدوال
 PROJECT_MEMORY.md   سجل أحداث المشروع
-docs/               توثيق المشاكل المعقدة (راس الروبوت، وضع الرفيق التجريبي، ردود الرفيق المقطوعة)
+docs/               توثيق المشاكل المعقدة (راس الروبوت، وضع الرفيق التجريبي، ردود الرفيق المقطوعة، ربط تليجرام)
 PRIVACY.md          سياسة الخصوصية
 LICENSE             حقوق الملكية
 ```
