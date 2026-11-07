@@ -14,7 +14,9 @@
   transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform 200ms ease-out, border-color 250ms ease;
 }
-.card:hover { border-color: var(--gold); }
+@media (hover: hover) {
+  .card:hover { border-color: var(--gold);}
+}
 /* اللمعة الذهبية اللي بتتبع المؤشر */
 .card::after {
   content: "";
@@ -26,7 +28,9 @@
   pointer-events: none;
   transition: opacity 250ms ease;
 }
-.card:hover::after { opacity: 1; }
+@media (hover: hover) {
+  .card:hover::after { opacity: 1;}
+}
 
 .preview {
   display: grid;
@@ -60,7 +64,9 @@
     linear-gradient(var(--gold), var(--gold)) bottom left / 1px 0 no-repeat;
   transition: background-size 350ms ease;
 }
-.tag:hover { background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%; }
+@media (hover: hover) {
+  .tag:hover { background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;}
+}
 
 .card-btn {
   justify-self: start;
@@ -75,5 +81,7 @@
   cursor: pointer;
   transition: box-shadow 250ms ease;
 }
-.card-btn:not(:disabled):hover { box-shadow: var(--glow-gold); }
+@media (hover: hover) {
+  .card-btn:not(:disabled):hover { box-shadow: var(--glow-gold);}
+}
 .card-btn:disabled { color: var(--text-2); border-color: rgba(255, 255, 255, 0.2); cursor: default; }

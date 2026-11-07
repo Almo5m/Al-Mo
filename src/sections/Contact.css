@@ -48,7 +48,9 @@
   cursor: pointer;
   transition: box-shadow 250ms ease;
 }
-.send:hover:not(:disabled) { box-shadow: var(--glow-gold); }
+@media (hover: hover) {
+  .send:hover:not(:disabled) { box-shadow: var(--glow-gold);}
+}
 .send:disabled { opacity: 0.5; cursor: default; }
 
 .side { display: grid; gap: var(--s-8); }
@@ -62,7 +64,9 @@
   text-decoration: none;
   transition: border-color 250ms ease, color 250ms ease;
 }
-a.channel:hover { border-color: var(--gold); color: var(--gold); }
+@media (hover: hover) {
+  a.channel:hover { border-color: var(--gold); color: var(--gold);}
+}
 .channel.off { color: var(--text-2); border-style: dashed; }
 .companion-card { display: grid; gap: var(--s-3); }
 .companion-card p { margin: 0; color: var(--text-2); }

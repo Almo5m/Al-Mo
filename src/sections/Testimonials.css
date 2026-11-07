@@ -5,7 +5,9 @@
   width: max-content;
   animation: marquee 40s linear infinite;
 }
-.marquee:hover .marquee-track { animation-play-state: paused; }
+@media (hover: hover) {
+  .marquee:hover .marquee-track { animation-play-state: paused;}
+}
 .quote {
   width: 360px;
   margin: 0;

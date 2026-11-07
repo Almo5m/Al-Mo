@@ -145,7 +145,10 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
   const lookE = new THREE.Euler();
   let lookApplied = false;
   let yaw = 0, pitch = 0, targetYaw = 0, targetPitch = 0;
+  // اللمس: الراس تبص ناحية الإصبع وهو نازل بس، وترجع قدّام لما يتشال أو يبدأ سكرول (من غير كده كانت بتفضل عالقة في آخر لمسة)
+  let touching = false;
   const onPointer = (e: PointerEvent) => {
+    if (e.pointerType === "touch" && !touching) return;
     const r = canvas.getBoundingClientRect();
     const dx = (e.clientX - (r.left + r.width / 2)) / (window.innerWidth * 0.5);
     const dy = (e.clientY - (r.top + r.height * 0.35)) / (window.innerHeight * 0.5);
@@ -157,8 +160,21 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
     targetYaw = 0;
     targetPitch = 0;
   };
+  const onTouchStart = (e: PointerEvent) => {
+    if (e.pointerType !== "touch") return;
+    touching = true;
+    onPointer(e);
+  };
+  const onTouchEnd = (e: PointerEvent) => {
+    if (e.pointerType !== "touch") return;
+    touching = false;
+    onLeave();
+  };
   if (opts.lookAtCursor && !reduced) {
     window.addEventListener("pointermove", onPointer);
+    window.addEventListener("pointerdown", onTouchStart);
+    window.addEventListener("pointerup", onTouchEnd);
+    window.addEventListener("pointercancel", onTouchEnd);
     document.documentElement.addEventListener("pointerleave", onLeave);
   }
 
@@ -289,6 +305,9 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
       ro.disconnect();
       offBus();
       window.removeEventListener("pointermove", onPointer);
+      window.removeEventListener("pointerdown", onTouchStart);
+      window.removeEventListener("pointerup", onTouchEnd);
+      window.removeEventListener("pointercancel", onTouchEnd);
       document.documentElement.removeEventListener("pointerleave", onLeave);
       window.removeEventListener("scroll", onScroll);
       mixer.stopAllAction();

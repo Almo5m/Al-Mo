@@ -73,7 +73,7 @@ export default function Process() {
     <section id="process" ref={ref} className="process" style={{ "--p": p } as CSSProperties}>
       <div className="stick">
         <h2>{t.title}</h2>
-        <div className="track">
+        <div className="process-track">
           <div className="line" />
           <div className="line-fill" />
           {t.steps.map((s, i) => (

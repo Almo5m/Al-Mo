@@ -63,11 +63,16 @@
   transform: translate(calc(var(--dir) * 10px), -50%) scale(0.4);
   transition: transform 300ms cubic-bezier(0.2, 0.9, 0.25, 1), opacity 200ms ease;
 }
-.nav a:hover::before,
-.nav a:focus-visible::before,
-.menu nav a:hover::before {
+
+.nav a:focus-visible::before {
   opacity: 1;
   transform: translate(0, -50%) scale(1);
+}
+@media (hover: hover) {
+  .nav a:hover::before,
+  .menu nav a:hover::before {
+  opacity: 1;
+  transform: translate(0, -50%) scale(1);}
 }
 
 .actions {
@@ -99,12 +104,17 @@
   transform: translateX(calc(var(--dir) * 130%));
   transition: transform 650ms ease;
 }
-.cta:hover,
+
 .cta:focus-visible {
   box-shadow: var(--glow-gold);
 }
-.cta:hover::after {
-  transform: translateX(calc(var(--dir) * -130%));
+@media (hover: hover) {
+  .cta:hover {
+  box-shadow: var(--glow-gold);}
+}
+@media (hover: hover) {
+  .cta:hover::after {
+  transform: translateX(calc(var(--dir) * -130%));}
 }
 
 /* مفتاح اللغة */
@@ -120,18 +130,18 @@
   font-size: 13px;
   cursor: pointer;
 }
-.lang.ar .lbl:first-child,
-.lang.en .lbl:last-child {
+.lang.ar .lang-lbl:first-child,
+.lang.en .lang-lbl:last-child {
   color: var(--text);
 }
-.lang .track {
+.lang .lang-track {
   width: 36px;
   height: 18px;
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 9px;
   position: relative;
 }
-.lang .dot {
+.lang .lang-dot {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -141,11 +151,12 @@
   background: var(--gold);
   transition: transform 350ms cubic-bezier(0.3, 1.6, 0.4, 1), box-shadow 250ms ease;
 }
-.lang.en .dot {
+.lang.en .lang-dot {
   transform: translateX(18px);
 }
-.lang:hover .dot {
-  box-shadow: 0 0 10px rgba(227, 176, 75, 0.8);
+@media (hover: hover) {
+  .lang:hover .lang-dot {
+  box-shadow: 0 0 10px rgba(227, 176, 75, 0.8);}
 }
 
 /* الموبايل: قائمة منسدلة صغيرة زجاجية */

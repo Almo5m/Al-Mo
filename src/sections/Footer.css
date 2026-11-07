@@ -27,8 +27,10 @@
   cursor: pointer;
 }
 .footer .off { color: var(--text-2); }
-.footer a:hover,
-.footer button:hover { color: var(--gold); text-decoration: underline wavy var(--gold); text-underline-offset: 6px; }
+@media (hover: hover) {
+  .footer a:hover,
+  .footer button:hover { color: var(--gold); text-decoration: underline wavy var(--gold); text-underline-offset: 6px;}
+}
 .rights { margin: var(--s-12) 0 0; color: var(--text-2); font-size: 14px; }
 
 @media (max-width: 900px) {

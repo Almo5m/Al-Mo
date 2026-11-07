@@ -1,13 +1,32 @@
-import LogoMark from "./LogoMark";
+import { useEffect, useRef, useState } from "react";
+import Robot from "./Robot";
 import "./RuneFrame.css";
 
-// إطار Rune بيحيط بمكعب الشعار.
+// إطار Rune بيحيط بالرفيق (روبوت 3D بيسمع أحداث الحوار: بيفكر ويتكلم ويتفاعل مع الزائر).
+// الروبوت بيتحمّل لما الإطار يقرّب من الشاشة بس، عشان الصفحة تفتح خفيفة.
 export default function RuneFrame() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [near, setNear] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "400px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <div className="frame">
-      <div className="frame-mark">
-        <LogoMark />
-      </div>
+    <div ref={ref} className="frame">
+      <div className="frame-robot">{near && <Robot lookAtCursor listen greet />}</div>
       <svg viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true">
         <polygon
           className="edge"

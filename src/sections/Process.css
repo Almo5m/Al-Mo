@@ -13,7 +13,7 @@
 }
 .stick h2 { font-size: clamp(32px, 4vw, 44px); }
 
-.track { position: relative; width: min(900px, 100%); height: 56px; margin-top: 90px; }
+.process-track { position: relative; width: min(900px, 100%); height: 56px; margin-top: 90px; }
 .line { position: absolute; top: 50%; inset-inline: 0; height: 1px; background: rgba(255, 255, 255, 0.2); }
 .line-fill { position: absolute; top: 50%; inset-inline-start: 0; height: 2px; width: calc(var(--p) * 100%); background: var(--gold); transform: translateY(-50%); }
 .node {

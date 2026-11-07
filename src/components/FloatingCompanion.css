@@ -31,10 +31,11 @@
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
   transition: border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease;
 }
-.float-btn:hover {
+@media (hover: hover) {
+  .float-btn:hover {
   border-color: var(--gold);
   box-shadow: 0 0 0 1px var(--gold), 0 0 28px rgba(227, 176, 75, 0.4);
-  transform: translateY(-2px);
+  transform: translateY(-2px);}
 }
 .float-btn .robot {
   position: absolute;

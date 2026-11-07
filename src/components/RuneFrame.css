@@ -4,16 +4,10 @@
   max-width: 380px;
   aspect-ratio: 5 / 6;
 }
-.frame-mark {
+/* الروبوت جوه الإطار، وبعيد شوية عن الحواف عشان الزوايا والرموز تفضل ظاهرة */
+.frame-robot {
   position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-}
-/* المكعب بيظهر بحجم مريح جوه الإطار (الـ LogoMark بيتحدد حجمه من الارتفاع) */
-.frame-mark .lm {
-  height: 46%;
-  width: auto;
+  inset: 6% 5% 5%;
 }
 .frame svg {
   position: absolute;

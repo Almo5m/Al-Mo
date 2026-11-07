@@ -187,15 +187,36 @@ export default function ParticleHeadline({ text }: { text: string }) {
         gl.clearColor(0, 0, 0, 0);
 
         let tx = -9999, ty = -9999, sx = -9999, sy = -9999, tOn = 0, sOn = 0;
-        const onMove = (e: PointerEvent) => {
+        // الماوس: التأثير بيتبع المؤشر ويختفي لما يخرج من الصفحة.
+        // اللمس: مفيش "مؤشر بيخرج"، فالتأثير بيشتغل والإصبع نازل بس ويتشال أول ما يتشال أو يبدأ سكرول (pointercancel).
+        // من غير كده التأثير كان بيفضل عالق في مكان آخر لمسة.
+        let touching = false;
+        const setPos = (e: PointerEvent) => {
           const r = cvs.getBoundingClientRect();
           tx = e.clientX - r.left;
           ty = e.clientY - r.top;
           if (sOn < 0.05) { sx = tx; sy = ty; }
           tOn = 1;
         };
+        const onMove = (e: PointerEvent) => {
+          if (e.pointerType === "touch" && !touching) return;
+          setPos(e);
+        };
+        const onDown = (e: PointerEvent) => {
+          if (e.pointerType !== "touch") return;
+          touching = true;
+          setPos(e);
+        };
+        const onUp = (e: PointerEvent) => {
+          if (e.pointerType !== "touch") return;
+          touching = false;
+          tOn = 0;
+        };
         const onLeave = () => { tOn = 0; };
         window.addEventListener("pointermove", onMove);
+        window.addEventListener("pointerdown", onDown);
+        window.addEventListener("pointerup", onUp);
+        window.addEventListener("pointercancel", onUp);
         document.documentElement.addEventListener("pointerleave", onLeave);
 
         const t0 = performance.now();
@@ -223,6 +244,9 @@ export default function ParticleHeadline({ text }: { text: string }) {
           cancelAnimationFrame(raf);
           io.disconnect();
           window.removeEventListener("pointermove", onMove);
+          window.removeEventListener("pointerdown", onDown);
+          window.removeEventListener("pointerup", onUp);
+          window.removeEventListener("pointercancel", onUp);
           document.documentElement.removeEventListener("pointerleave", onLeave);
           gl.deleteBuffer(buf);
           gl.deleteProgram(prog);

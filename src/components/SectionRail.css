@@ -36,7 +36,9 @@
   pointer-events: none;
   transition: opacity 200ms ease;
 }
-.rail a:hover::after { opacity: 1; }
+@media (hover: hover) {
+  .rail a:hover::after { opacity: 1;}
+}
 
 .progress {
   display: none;

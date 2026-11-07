@@ -13,6 +13,7 @@ export function attachSparks(
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   const gold = getComputedStyle(document.documentElement).getPropertyValue("--gold").trim() || "#e3b04b";
 
+  const perFrame = window.matchMedia("(pointer: coarse)").matches ? 1 : 3; // الموبايل: جسيمات أقل (أخف على الجهاز)
   let w = 0, h = 0, raf = 0, hot = false;
   let sparks: Spark[] = [];
 
@@ -41,7 +42,7 @@ export function attachSparks(
 
   const frame = () => {
     ctx.clearRect(0, 0, w + SPARK_PAD * 2, h + SPARK_PAD * 2);
-    if (hot) for (let i = 0; i < 3; i++) spawn();
+    if (hot) for (let i = 0; i < perFrame; i++) spawn();
     sparks = sparks.filter((p) => p.life > 0);
     ctx.fillStyle = gold;
     for (const p of sparks) {
@@ -55,7 +56,15 @@ export function attachSparks(
     raf = hot || sparks.length ? requestAnimationFrame(frame) : 0;
   };
 
-  const on = () => { hot = true; resize(); if (!raf) raf = requestAnimationFrame(frame); };
+  const on = (e: Event) => {
+    // اللمس مفيهوش hover، فمنشغّلش الجسيمات عليه
+    if (e.type === "pointerenter" && (e as PointerEvent).pointerType === "touch") return;
+    // لمسة أو ضغطة ماوس بتعمل focus على الزرار، والجسيمات كانت بتفضل شغالة بعدها. الكيبورد بس (focus-visible) هو اللي يشغّلها
+    if (e.type === "focus" && !host.matches(":focus-visible")) return;
+    hot = true;
+    resize();
+    if (!raf) raf = requestAnimationFrame(frame);
+  };
   const off = () => { hot = false; };
   opts.on.forEach((e) => host.addEventListener(e, on));
   opts.off.forEach((e) => host.addEventListener(e, off));

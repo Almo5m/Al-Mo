@@ -13,11 +13,11 @@ export default function LangSwitch({ lang, onSwitch }: { lang: Lang; onSwitch: (
       data-no-scramble
       onClick={() => onSwitch(lang === "ar" ? "en" : "ar")}
     >
-      <span className="lbl">ع</span>
-      <span className="track">
-        <i className="dot" />
+      <span className="lang-lbl">ع</span>
+      <span className="lang-track">
+        <i className="lang-dot" />
       </span>
-      <span className="lbl">EN</span>
+      <span className="lang-lbl">EN</span>
     </button>
   );
 }
