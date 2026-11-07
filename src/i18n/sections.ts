@@ -4,9 +4,10 @@ import type { Lang } from "./index";
 // لسه مؤقت: الآراء.
 
 // بيانات المشاريع (مش نصوص): التقنيات ولينك الديمو. لينك فاضي = "الديمو قريبًا".
-// المشروع الجديد بيتضاف هنا (id جديد + تقنياته + لينك الديمو) ونصوصه في PROJECTS تحت بنفس الترتيب.
-export const PROJECTS_DATA: { id: string; tags: string[]; demoUrl: string }[] = [
-  { id: "spare-parts", tags: ["React", "TypeScript", "Supabase", "PWA"], demoUrl: "https://almo5m.github.io/spare-parts-demo/" },
+// preview = مسار لقطة الشاشة في public/projects (1280 عرض webp تقريبًا)، وفاضي = مكان المعاينة الافتراضي.
+// المشروع الجديد بيتضاف هنا (id جديد + تقنياته + لينك الديمو + لقطته) ونصوصه في PROJECTS تحت بنفس الترتيب.
+export const PROJECTS_DATA: { id: string; tags: string[]; demoUrl: string; preview: string }[] = [
+  { id: "spare-parts", tags: ["React", "TypeScript", "Supabase", "PWA"], demoUrl: "https://almo5m.github.io/spare-parts-demo/", preview: "/projects/spare-parts.webp" },
 ];
 
 export const PROJECTS: Record<Lang, {

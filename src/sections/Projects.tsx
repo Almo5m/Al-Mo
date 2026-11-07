@@ -21,6 +21,7 @@ export default function Projects() {
               desc={t.items[i].desc}
               impact={t.items[i].impact}
               tags={p.tags}
+              preview={p.preview}
               labels={t}
               canDemo={Boolean(p.demoUrl)}
               onDemo={() => setDemo({ title: t.items[i].title, url: p.demoUrl })}

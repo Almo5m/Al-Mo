@@ -6,13 +6,14 @@ type Props = {
   desc: string;
   impact: string;
   tags: string[];
+  preview?: string; // لقطة شاشة الديمو (اختياري)
   labels: { preview: string; impact: string; demo: string; soon: string };
   canDemo: boolean;
   onDemo: () => void;
 };
 
 // كارت مشروع بميل ثلاثي الأبعاد خفيف ولمعة ذهبية بتتبع المؤشر (على الأجهزة اللي فيها ماوس بس)
-export default function ProjectCard({ title, desc, impact, tags, labels, canDemo, onDemo }: Props) {
+export default function ProjectCard({ title, desc, impact, tags, preview, labels, canDemo, onDemo }: Props) {
   const ref = useRef<HTMLElement>(null);
 
   function move(e: PointerEvent<HTMLElement>) {
@@ -36,9 +37,15 @@ export default function ProjectCard({ title, desc, impact, tags, labels, canDemo
 
   return (
     <article ref={ref} className="card" onPointerMove={move} onPointerLeave={leave}>
-      <div className="preview" aria-hidden="true">
-        <span>{labels.preview}</span>
-      </div>
+      {preview ? (
+        <div className="preview has-img">
+          <img src={preview} alt={title} width={1280} height={674} loading="lazy" decoding="async" />
+        </div>
+      ) : (
+        <div className="preview" aria-hidden="true">
+          <span>{labels.preview}</span>
+        </div>
+      )}
       <h3>{title}</h3>
       <p className="desc">{desc}</p>
       <ul className="tags">
