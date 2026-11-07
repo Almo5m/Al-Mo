@@ -3,6 +3,7 @@ import type { Lang } from "./index";
 type CompanionText = {
   title: string;
   chatTitle: string;
+  floatHint: string;
   opener: string;
   placeholder: string;
   send: string;
@@ -26,6 +27,7 @@ export const COMPANION: Record<Lang, CompanionText> = {
   ar: {
     title: "الرفيق",
     chatTitle: "اتكلم مع الرفيق",
+    floatHint: "عندك فكرة؟ احكيلي عنها.",
     opener: "أهلًا. أنا الرفيق، مساعد AI بتاع AL MO Digital Solutions. إيه اللي جابك هنا؟",
     placeholder: "اكتب رسالتك",
     send: "إرسال",
@@ -46,6 +48,7 @@ export const COMPANION: Record<Lang, CompanionText> = {
   en: {
     title: "The companion",
     chatTitle: "Talk to the companion",
+    floatHint: "Got an idea? Tell me about it.",
     opener: "Hi. I'm the companion, the AI assistant of AL MO Digital Solutions. What brings you here?",
     placeholder: "Type your message",
     send: "Send",

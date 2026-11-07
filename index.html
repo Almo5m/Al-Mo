@@ -21,17 +21,7 @@
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <script>
-      // اللغة والاتجاه قبل أول رسم (نفس منطق detectLang في src/i18n)
-      try {
-        var l = localStorage.getItem("almo_lang");
-        if (l !== "ar" && l !== "en") {
-          l = ((navigator.languages && navigator.languages[0]) || navigator.language || "en").toLowerCase().indexOf("ar") === 0 ? "ar" : "en";
-        }
-        document.documentElement.lang = l;
-        document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
-      } catch (e) {}
-    </script>
+    <script src="/lang-init.js"></script>
     <title>AL MO Digital Solutions</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

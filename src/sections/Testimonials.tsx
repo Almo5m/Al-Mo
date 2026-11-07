@@ -3,7 +3,7 @@ import { TESTIMONIALS } from "../i18n/sections";
 import "./Testimonials.css";
 
 // شريط متحرك. القائمة بتتكرر مرتين عشان اللف يبان من غير فجوة.
-// TODO: الآراء دي مؤقتة، لازم تتحط آراء حقيقية بس.
+// القسم مش بيظهر غير لما يكون فيه آراء حقيقية (شوف TESTIMONIALS في i18n/sections.ts).
 export default function Testimonials() {
   const t = TESTIMONIALS[useLang()];
   const loop = [...t.items, ...t.items];

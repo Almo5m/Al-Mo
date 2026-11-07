@@ -25,6 +25,7 @@ export type RobotOptions = {
   greet?: boolean; // يصحى ويسلّم أول ما يظهر
   listen?: boolean; // يسمع أحداث robotDo
   scrollHint?: boolean; // لو الزائر ساكت فوق، يشاور لتحت
+  portrait?: boolean; // كادر على الراس بس، ورسم بـ 30 إطار في الثانية (زر الرفيق العائم)
 };
 
 export type RobotControl = {
@@ -70,6 +71,14 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
   // الكاميرا بتتظبط لوحدها على حجم الروبوت وشكل الكادر
   const camera = new THREE.PerspectiveCamera(STAGE.fov, 1, 0.1, 100);
   const box = new THREE.Box3().setFromObject(root);
+  if (opts.portrait) {
+    // الكادر على الراس. لو قياسها طلع غير منطقي نرجع لأعلى 40% من الروبوت
+    const full = box.getSize(new THREE.Vector3());
+    const headNode = root.getObjectByName("Head");
+    const hb = headNode ? new THREE.Box3().setFromObject(headNode) : null;
+    if (hb && hb.getSize(new THREE.Vector3()).y > full.y * 0.08) box.copy(hb);
+    else box.min.y = box.max.y - full.y * 0.4;
+  }
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
   function resize() {
@@ -78,7 +87,7 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     const t = Math.tan(THREE.MathUtils.degToRad(STAGE.fov / 2));
-    const dist = Math.max(size.y / 2 / t, size.x / 2 / (t * camera.aspect)) * STAGE.framing;
+    const dist = Math.max(size.y / 2 / t, size.x / 2 / (t * camera.aspect)) * (opts.portrait ? 1.3 : STAGE.framing);
     camera.position.set(center.x, center.y + size.y * 0.04, center.z + dist);
     camera.lookAt(center);
     camera.updateProjectionMatrix();
@@ -200,6 +209,7 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
 
   const frame = (now: number) => {
     raf = requestAnimationFrame(frame);
+    if (opts.portrait && now - last < 32) return; // الزر الصغير بيكفيه 30 إطار في الثانية
     const dt = Math.min((now - last) / 1000, 0.1);
     last = now;
     // 1) نشيل ميل الإطار اللي فات عشان الراس ترجع لقيمة الأنيميشن النضيفة
@@ -229,7 +239,7 @@ export async function createRobot(canvas: HTMLCanvasElement, opts: RobotOptions)
       const fps = frames / acc;
       frames = 0;
       acc = 0;
-      if (fps < 28 && degraded < 2) {
+      if (fps < 28 && degraded < 2 && !opts.portrait) {
         degraded++;
         if (degraded === 1) {
           renderer.setPixelRatio(1);

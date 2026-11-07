@@ -12,6 +12,8 @@ import Testimonials from "./sections/Testimonials";
 import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
 import SectionRail from "./components/SectionRail";
+import FloatingCompanion from "./components/FloatingCompanion";
+import { SHOW_TESTIMONIALS } from "./i18n/sections";
 
 type Phase = "loading" | "leaving" | "done";
 
@@ -63,12 +65,13 @@ export default function App() {
           <>
             <Header onSwitchLang={switchLang} />
             <SectionRail />
+            <FloatingCompanion />
             <main>
               <Hero />
               <Projects />
               <Companion />
               <Process />
-              <Testimonials />
+              {SHOW_TESTIMONIALS && <Testimonials />}
               <Contact />
             </main>
             <Footer />
