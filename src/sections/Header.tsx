@@ -3,6 +3,7 @@ import LangSwitch from "../components/LangSwitch";
 import LogoMark from "../components/LogoMark";
 import { useLang } from "../i18n/LangContext";
 import { HEADER } from "../i18n/header";
+import { useNavLinks } from "../i18n/useNav";
 import type { Lang } from "../i18n";
 import "./Header.css";
 
@@ -21,7 +22,8 @@ export default function Header({ onSwitchLang }: { onSwitchLang: (l: Lang) => vo
   }, [open]);
 
   const close = () => setOpen(false);
-  const links = t.links.map((l) => (
+  const navLinks = useNavLinks();
+  const links = navLinks.map((l) => (
     <a key={l.id} href={`#${l.id}`} onClick={close}>
       {l.label}
     </a>

@@ -1,0 +1,124 @@
+/* كل الكلاسات هنا بتبدأ بـ ad- (الـ CSS عام على الموقع كله) */
+.ad { min-height: 100vh; padding: var(--s-4); }
+.ad-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  max-width: 1100px;
+  margin: 0 auto var(--s-6);
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.ad-bar nav { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.ad-body { max-width: 1100px; margin: 0 auto; }
+
+.ad-card {
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--s-6);
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+}
+.ad-card h1, .ad-card h2 { margin: 0; font-size: 20px; }
+.ad-narrow { width: min(440px, 100%); margin: 10vh auto 0; }
+.ad-stack { display: grid; gap: var(--s-4); }
+.ad-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--s-4); }
+.ad-stats { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.ad-num { font-family: var(--font-mono); font-size: 40px; color: var(--gold); line-height: 1.1; }
+.ad-muted { margin: 0; color: var(--text-2); font-size: 14px; line-height: 1.7; }
+.ad-err { margin: 0; color: var(--error); line-height: 1.7; }
+.ad-pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.8; }
+.ad-snippet { margin: 0; color: var(--text-2); overflow-wrap: anywhere; }
+
+.ad label { display: grid; gap: var(--s-2); }
+.ad input:not([type="checkbox"]),
+.ad textarea,
+.ad select {
+  width: 100%;
+  padding: var(--s-3) var(--s-4);
+  color: var(--text);
+  font: inherit;
+  background: var(--surface-deep);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius);
+}
+.ad textarea { resize: vertical; }
+.ad-code { text-align: center; font-family: var(--font-mono); font-size: 24px; letter-spacing: 0.4em; }
+.ad-qr { justify-self: center; background: #fff; padding: var(--s-2); border-radius: var(--radius); }
+
+.ad-btn, .ad-tab {
+  padding: var(--s-2) var(--s-4);
+  color: var(--text);
+  font: inherit;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.ad-btn:disabled { opacity: 0.5; cursor: default; }
+.ad-primary { color: #000; font-weight: 600; background: var(--gold); border-color: var(--gold); }
+.ad-danger { color: var(--error); border-color: var(--error); }
+.ad-on { color: var(--gold); border-color: var(--gold); }
+.ad-primary.ad-on { color: #000; }
+.ad-range { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.ad-badge {
+  margin-inline-start: var(--s-2);
+  padding: 0 7px;
+  color: #000;
+  font-size: 12px;
+  background: var(--gold);
+  border-radius: 10px;
+}
+
+.ad-item-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.ad-new { border-color: var(--gold); }
+.ad-tag {
+  margin-inline: var(--s-2);
+  padding: 1px 8px;
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  border: 1px solid rgba(227, 176, 75, 0.5);
+  border-radius: var(--radius);
+}
+.ad-stars { margin-inline: var(--s-2); color: var(--gold); }
+
+.ad-rows { display: grid; gap: var(--s-2); margin: 0; padding: 0; list-style: none; }
+.ad-rows li {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-2) var(--s-3);
+  background: linear-gradient(to left, rgba(227, 176, 75, 0.22) var(--w), transparent var(--w));
+  border-radius: var(--radius);
+}
+.ad-rows b { font-family: var(--font-mono); font-weight: 500; }
+
+.ad-chart { width: 100%; height: 140px; display: block; }
+.ad-chart rect { fill: var(--gold); opacity: 0.85; }
+.ad-chart-axis { display: flex; justify-content: space-between; color: var(--text-2); font-family: var(--font-mono); font-size: 12px; }
+
+.ad-linkbox {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-3);
+  border: 1px dashed var(--gold);
+  border-radius: var(--radius);
+}
+.ad-linkbox code { overflow-wrap: anywhere; font-family: var(--font-mono); font-size: 13px; }

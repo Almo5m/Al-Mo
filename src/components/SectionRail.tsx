@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useLang } from "../i18n/LangContext";
 import { HEADER } from "../i18n/header";
+import { useNavLinks } from "../i18n/useNav";
 import { FOOTER } from "../i18n/sections";
 import "./SectionRail.css";
-
-// نفس ترتيب روابط القائمة، فلو قسم اتشال أو اتضاف بيتعدّل هنا لوحده
-const IDS = ["top", ...HEADER.en.links.map((l) => l.id), "contact"];
 
 // كمبيوتر وتابلت: نقاط أقسام جانبية بتلمع عند القسم الحالي. موبايل: خط تقدم رفيع.
 export default function SectionRail() {
   const lang = useLang();
-  const labels = [FOOTER[lang].home, ...HEADER[lang].links.map((l) => l.label), HEADER[lang].contact];
+  // نفس ترتيب روابط القائمة، فلو قسم اتشال أو اتضاف بيتعدّل هنا لوحده
+  const navLinks = useNavLinks();
+  const IDS = ["top", ...navLinks.map((l) => l.id), "contact"];
+  const idsKey = IDS.join(",");
+  const labels = [FOOTER[lang].home, ...navLinks.map((l) => l.label), HEADER[lang].contact];
   const [active, setActive] = useState("top");
   const bar = useRef<HTMLDivElement>(null);
 
@@ -34,7 +36,7 @@ export default function SectionRail() {
       io.disconnect();
       window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [idsKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

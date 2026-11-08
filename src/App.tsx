@@ -13,7 +13,9 @@ import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
 import SectionRail from "./components/SectionRail";
 import FloatingCompanion from "./components/FloatingCompanion";
-import { SHOW_TESTIMONIALS } from "./i18n/sections";
+import { loadReviews, useReviews } from "./lib/reviews";
+import { useAnalytics } from "./lib/useAnalytics";
+import { track } from "./lib/track";
 
 type Phase = "loading" | "leaving" | "done";
 
@@ -24,6 +26,11 @@ export default function App() {
   const appRef = useRef<HTMLDivElement>(null);
   const scrambleNext = useRef(false);
   useEffect(() => applyLang(lang), []); // eslint-disable-line react-hooks/exhaustive-deps
+  const hasReviews = useReviews().length > 0;
+  useEffect(() => {
+    void loadReviews();
+  }, []);
+  useAnalytics(phase === "done");
 
   // بعد ما React يرسم النصوص بالغة الجديدة، الحروف بتتحوّل وتستقر
   useEffect(() => {
@@ -46,6 +53,7 @@ export default function App() {
       applyLang(next); // الاتجاه لازم يتغيّر قبل ما المكوّنات تقيس أماكنها
       saveLang(next); // اختيار الزائر بيتحفظ وبيغلب لغة الجهاز
       setLang(next);
+      track("lang", next);
     };
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       apply();
@@ -71,7 +79,7 @@ export default function App() {
               <Projects />
               <Companion />
               <Process />
-              {SHOW_TESTIMONIALS && <Testimonials />}
+              {hasReviews && <Testimonials />}
               <Contact />
             </main>
             <Footer />

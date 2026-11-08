@@ -36,3 +36,8 @@
 curl -sI https://al-mo.vercel.app | grep -i "content-security\|strict-transport\|x-frame"
 ```
 أو افتح الدومين على موقع securityheaders.com.
+
+## صفحتا /admin و/review
+- `vercel.json` فيه `rewrites` للمسارين دول (الموقع تطبيق صفحة واحدة، فالمسار لازم يرجع لـ `index.html`).
+- ليهم ترويسات زيادة: `X-Robots-Tag: noindex` عشان محركات البحث ما تفهرسهمش، و`Cache-Control: no-store`.
+- نفس الـ CSP بيحميهم: السكريبتات `'self'` بس، والاتصال بـ `*.supabase.co` بس. صورة QR بتيجي كـ `data:` وده مسموح في `img-src`.

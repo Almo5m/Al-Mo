@@ -4,6 +4,7 @@ import DemoWindow from "../components/DemoWindow";
 import Reveal from "../components/Reveal";
 import { useLang } from "../i18n/LangContext";
 import { PROJECTS, PROJECTS_DATA } from "../i18n/sections";
+import { track } from "../lib/track";
 import "./Projects.css";
 
 export default function Projects() {
@@ -24,7 +25,10 @@ export default function Projects() {
               preview={p.preview}
               labels={t}
               canDemo={Boolean(p.demoUrl)}
-              onDemo={() => setDemo({ title: t.items[i].title, url: p.demoUrl })}
+              onDemo={() => {
+                track("demo", p.id);
+                setDemo({ title: t.items[i].title, url: p.demoUrl });
+              }}
             />
           </Reveal>
         ))}

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { askCompanion, sendHandoff, CompanionError, type Msg } from "../lib/companion";
+import { track } from "../lib/track";
 import { robotDo } from "../lib/robotBus";
 import { useLang } from "../i18n/LangContext";
 import { COMPANION } from "../i18n/companion";
@@ -33,6 +34,7 @@ export default function CompanionChat() {
     setText("");
     setBusy(true);
     setNote("");
+    track("chat");
     robotDo("Think");
     try {
       const reply = await askCompanion(next);
@@ -59,6 +61,7 @@ export default function CompanionChat() {
       await sendHandoff(msgs, { name: name.trim(), email: email.trim() });
       setHStatus("ok");
       setPanel(false);
+      track("handoff");
       robotDo("Success");
     } catch (e) {
       setHStatus(e instanceof CompanionError ? e.kind : "error");

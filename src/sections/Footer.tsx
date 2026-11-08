@@ -2,9 +2,11 @@ import { useState } from "react";
 import LegalModal from "../components/LegalModal";
 import { useLang } from "../i18n/LangContext";
 import { HEADER } from "../i18n/header";
+import { useNavLinks } from "../i18n/useNav";
 import { CONTACT, FOOTER } from "../i18n/sections";
 import type { LegalDoc } from "../i18n/legal";
 import { CONTACT_LINKS } from "../config";
+import { track } from "../lib/track";
 import "./Footer.css";
 
 export default function Footer() {
@@ -12,11 +14,12 @@ export default function Footer() {
   const t = FOOTER[lang];
   const h = HEADER[lang];
   const c = CONTACT[lang];
+  const navLinks = useNavLinks();
   const [doc, setDoc] = useState<LegalDoc | null>(null);
 
-  const channel = (label: string, href: string) =>
+  const channel = (label: string, href: string, key: string) =>
     href ? (
-      <a href={href} target="_blank" rel="noopener noreferrer">{label}</a>
+      <a href={href} target="_blank" rel="noopener noreferrer" onClick={() => track("channel", key)}>{label}</a>
     ) : (
       <span className="off">{label}</span>
     );
@@ -32,7 +35,7 @@ export default function Footer() {
         <nav aria-label={t.sections}>
           <h4>{t.sections}</h4>
           <a href="#top">{t.home}</a>
-          {h.links.map((l) => (
+          {navLinks.map((l) => (
             <a key={l.id} href={`#${l.id}`}>{l.label}</a>
           ))}
           <a href="#contact">{h.contact}</a>
@@ -40,9 +43,9 @@ export default function Footer() {
 
         <div>
           <h4>{t.channels}</h4>
-          {channel(c.whatsapp, CONTACT_LINKS.whatsapp)}
-          {channel(c.telegram, CONTACT_LINKS.telegram)}
-          {channel(c.mail, CONTACT_LINKS.email)}
+          {channel(c.whatsapp, CONTACT_LINKS.whatsapp, "whatsapp")}
+          {channel(c.telegram, CONTACT_LINKS.telegram, "telegram")}
+          {channel(c.mail, CONTACT_LINKS.email, "email")}
         </div>
 
         <div>

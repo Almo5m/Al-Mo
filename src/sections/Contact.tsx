@@ -7,6 +7,7 @@ import { CONTACT } from "../i18n/sections";
 import { CONTACT_LINKS } from "../config";
 import { ContactError, sendContact } from "../lib/contact";
 import { robotDo } from "../lib/robotBus";
+import { track } from "../lib/track";
 import "./Contact.css";
 
 type Status = "idle" | "sending" | "ok" | "invalid" | "limit" | "error" | "offline";
@@ -31,6 +32,7 @@ export default function Contact() {
     try {
       await sendContact(f);
       setStatus("ok");
+      track("form");
       robotDo("Success");
       setF({ name: "", email: "", message: "", hp: "" });
     } catch (err) {
@@ -39,9 +41,9 @@ export default function Contact() {
     }
   }
 
-  const channel = (label: string, href: string) =>
+  const channel = (label: string, href: string, key: string) =>
     href ? (
-      <a className="channel" href={href} target="_blank" rel="noopener noreferrer">
+      <a className="channel" href={href} target="_blank" rel="noopener noreferrer" onClick={() => track("channel", key)}>
         {label}
       </a>
     ) : (
@@ -88,9 +90,9 @@ export default function Contact() {
         <Reveal delay={150}>
           <aside className="side">
             <div className="channels">
-              {channel(t.whatsapp, CONTACT_LINKS.whatsapp)}
-              {channel(t.telegram, CONTACT_LINKS.telegram)}
-              {channel(t.mail, CONTACT_LINKS.email)}
+              {channel(t.whatsapp, CONTACT_LINKS.whatsapp, "whatsapp")}
+              {channel(t.telegram, CONTACT_LINKS.telegram, "telegram")}
+              {channel(t.mail, CONTACT_LINKS.email, "email")}
             </div>
             <div className="companion-card">
               <p>{t.orTalk}</p>

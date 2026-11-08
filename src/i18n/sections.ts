@@ -80,13 +80,11 @@ export const PROCESS: Record<Lang, { title: string; companion: string; steps: { 
   },
 };
 
-// آراء العملاء: ضيف هنا آراء حقيقية بس (النص والاسم). طول ما القايمة فاضية، القسم ورابطه في القائمة والمؤشر الجانبي والفوتر مخفيين تمامًا.
-// الشكل: { text: "...", who: "..." }، وبنفس الترتيب في العربي والإنجليزي.
-export const TESTIMONIALS: Record<Lang, { title: string; items: { text: string; who: string }[] }> = {
-  ar: { title: "آراء العملاء", items: [] },
-  en: { title: "Testimonials", items: [] },
+// آراء العملاء بتيجي من لوحة التحكم (جدول reviews) وبتظهر بعد ما تقبلها. هنا العنوان بس.
+export const TESTIMONIALS: Record<Lang, { title: string }> = {
+  ar: { title: "آراء العملاء" },
+  en: { title: "Testimonials" },
 };
-export const SHOW_TESTIMONIALS = TESTIMONIALS.ar.items.length > 0;
 
 export const CONTACT: Record<Lang, {
   title: string; name: string; email: string; message: string; send: string; sending: string;
