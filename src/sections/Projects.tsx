@@ -3,31 +3,35 @@ import ProjectCard from "../components/ProjectCard";
 import DemoWindow from "../components/DemoWindow";
 import Reveal from "../components/Reveal";
 import { useLang } from "../i18n/LangContext";
-import { PROJECTS, PROJECTS_DATA } from "../i18n/sections";
+import { PROJECTS } from "../i18n/sections";
+import { useContent } from "../lib/content";
 import { track } from "../lib/track";
 import "./Projects.css";
 
 export default function Projects() {
-  const t = PROJECTS[useLang()];
+  const lang = useLang();
+  const t = PROJECTS[lang];
+  const { projects } = useContent();
   const [demo, setDemo] = useState<{ title: string; url: string } | null>(null);
 
+  if (!projects.length) return null;
   return (
     <section id="projects" className="section projects">
       <h2>{t.title}</h2>
       <div className="cards">
-        {PROJECTS_DATA.map((p, i) => (
+        {projects.map((p, i) => (
           <Reveal key={p.id} delay={i * 120}>
             <ProjectCard
-              title={t.items[i].title}
-              desc={t.items[i].desc}
-              impact={t.items[i].impact}
+              title={p.title[lang]}
+              desc={p.desc[lang]}
+              impact={p.impact[lang]}
               tags={p.tags}
               preview={p.preview}
               labels={t}
               canDemo={Boolean(p.demoUrl)}
               onDemo={() => {
                 track("demo", p.id);
-                setDemo({ title: t.items[i].title, url: p.demoUrl });
+                setDemo({ title: p.title[lang], url: p.demoUrl });
               }}
             />
           </Reveal>

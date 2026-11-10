@@ -14,6 +14,7 @@ import Footer from "./sections/Footer";
 import SectionRail from "./components/SectionRail";
 import FloatingCompanion from "./components/FloatingCompanion";
 import { loadReviews, useReviews } from "./lib/reviews";
+import { loadContent, useContent } from "./lib/content";
 import { useAnalytics } from "./lib/useAnalytics";
 import { track } from "./lib/track";
 
@@ -27,8 +28,10 @@ export default function App() {
   const scrambleNext = useRef(false);
   useEffect(() => applyLang(lang), []); // eslint-disable-line react-hooks/exhaustive-deps
   const hasReviews = useReviews().length > 0;
+  const { sections } = useContent();
   useEffect(() => {
     void loadReviews();
+    void loadContent(); // بيخلص خلال شاشة التحميل، فالمحتوى بيبقى جاهز أول ما الصفحة تظهر
   }, []);
   useAnalytics(phase === "done");
 
@@ -77,8 +80,8 @@ export default function App() {
             <main>
               <Hero />
               <Projects />
-              <Companion />
-              <Process />
+              {sections.companion && <Companion />}
+              {sections.process && <Process />}
               {hasReviews && <Testimonials />}
               <Contact />
             </main>

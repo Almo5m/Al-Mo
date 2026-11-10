@@ -44,7 +44,8 @@
   font-size: 13px;
 }
 /* لقطة الشاشة بتملا المعاينة من فوق (الأهم في الواجهة فوق) */
-.preview.has-img { overflow: hidden; background: none; }
+/* نسبة لقطة الشاشة (1280×674) عشان ما تتقصش من الجنب */
+.preview.has-img { overflow: hidden; background: none; aspect-ratio: 1280 / 674; }
 .preview.has-img img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .card h3 { font-size: 22px; }
 .desc, .impact { margin: 0; color: var(--text-2); line-height: 1.7; }

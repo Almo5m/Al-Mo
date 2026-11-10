@@ -4,7 +4,7 @@ import CompanionBubble from "../components/CompanionBubble";
 import Reveal from "../components/Reveal";
 import { useLang } from "../i18n/LangContext";
 import { CONTACT } from "../i18n/sections";
-import { CONTACT_LINKS } from "../config";
+import { useContent } from "../lib/content";
 import { ContactError, sendContact } from "../lib/contact";
 import { robotDo } from "../lib/robotBus";
 import { track } from "../lib/track";
@@ -14,6 +14,7 @@ type Status = "idle" | "sending" | "ok" | "invalid" | "limit" | "error" | "offli
 
 export default function Contact() {
   const t = CONTACT[useLang()];
+  const { contactLinks: CONTACT_LINKS, sections } = useContent();
   const [f, setF] = useState({ name: "", email: "", message: "", hp: "" });
   const [status, setStatus] = useState<Status>("idle");
 
@@ -94,10 +95,12 @@ export default function Contact() {
               {channel(t.telegram, CONTACT_LINKS.telegram, "telegram")}
               {channel(t.mail, CONTACT_LINKS.email, "email")}
             </div>
-            <div className="companion-card">
-              <p>{t.orTalk}</p>
-              <a href="#companion" className="channel">{t.talk}</a>
-            </div>
+            {sections.companion && (
+              <div className="companion-card">
+                <p>{t.orTalk}</p>
+                <a href="#companion" className="channel">{t.talk}</a>
+              </div>
+            )}
           </aside>
         </Reveal>
       </div>

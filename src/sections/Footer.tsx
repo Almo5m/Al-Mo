@@ -5,7 +5,7 @@ import { HEADER } from "../i18n/header";
 import { useNavLinks } from "../i18n/useNav";
 import { CONTACT, FOOTER } from "../i18n/sections";
 import type { LegalDoc } from "../i18n/legal";
-import { CONTACT_LINKS } from "../config";
+import { useContent } from "../lib/content";
 import { track } from "../lib/track";
 import "./Footer.css";
 
@@ -15,6 +15,7 @@ export default function Footer() {
   const h = HEADER[lang];
   const c = CONTACT[lang];
   const navLinks = useNavLinks();
+  const { contactLinks: CONTACT_LINKS } = useContent();
   const [doc, setDoc] = useState<LegalDoc | null>(null);
 
   const channel = (label: string, href: string, key: string) =>

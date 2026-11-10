@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Robot from "./Robot";
 import { useLang } from "../i18n/LangContext";
 import { COMPANION } from "../i18n/companion";
+import { useContent } from "../lib/content";
 import "./FloatingCompanion.css";
 
 const SEEN = "almo_bubble"; // الفقاعة بتظهر مرة واحدة في الجلسة
@@ -9,7 +10,9 @@ const SEEN = "almo_bubble"; // الفقاعة بتظهر مرة واحدة في 
 // الرفيق كزر عائم للتواصل: بيظهر بعد الـ Hero، وبيختفي لما الحوار أو الفورم يبقوا قدام الزائر.
 // الضغط عليه بيوصّل الزائر لقسم الحوار ويركّز على خانة الكتابة.
 export default function FloatingCompanion() {
-  const t = COMPANION[useLang()];
+  const lang = useLang();
+  const t = COMPANION[lang];
+  const { sections, floating } = useContent();
   const [show, setShow] = useState(false);
   const [mounted, setMounted] = useState(false); // الروبوت بيتحمّل أول مرة الزر يظهر بس
   const [bubble, setBubble] = useState(false);
@@ -60,7 +63,7 @@ export default function FloatingCompanion() {
     } catch {
       /* التخزين مش متاح: الفقاعة هتظهر عادي */
     }
-    if (seen) return;
+    if (seen || !floating.bubbleEnabled) return;
     const a = window.setTimeout(() => {
       setBubble(true);
       try {
@@ -74,7 +77,7 @@ export default function FloatingCompanion() {
       clearTimeout(a);
       clearTimeout(b);
     };
-  }, [show]);
+  }, [show, floating.bubbleEnabled]);
 
   function open() {
     setBubble(false);
@@ -85,11 +88,14 @@ export default function FloatingCompanion() {
     window.setTimeout(() => section.querySelector<HTMLElement>(".chat-input input")?.focus({ preventScroll: true }), reduce ? 0 : 700);
   }
 
+  // الأدمن قفل الزرار، أو قفل قسم الرفيق (الزرار بيودّي له)
+  if (!floating.enabled || !sections.companion) return null;
+
   return (
     <div className={`float-companion ${show ? "on" : ""}`} aria-hidden={!show}>
       {bubble && (
         <div className="float-bubble" role="status">
-          {t.floatHint}
+          {floating.bubble[lang] ?? t.floatHint}
         </div>
       )}
       <button type="button" className="float-btn" onClick={open} aria-label={t.chatTitle} tabIndex={show ? 0 : -1}>

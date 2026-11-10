@@ -4,16 +4,20 @@ import { Login, MfaEnroll, MfaVerify } from "./Auth";
 import Overview from "./Overview";
 import Requests from "./Requests";
 import Reviews from "./Reviews";
+import Projects from "./Projects";
+import SiteSettings from "./SiteSettings";
 import Settings from "./Settings";
 import "./admin.css";
 
 type Phase = "loading" | "unconfigured" | "login" | "verify" | "enroll" | "denied" | "ready";
-type Tab = "overview" | "requests" | "reviews" | "settings";
+type Tab = "overview" | "requests" | "reviews" | "projects" | "site" | "settings";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "overview", label: "نظرة عامة" },
   { id: "requests", label: "الطلبات" },
   { id: "reviews", label: "الآراء" },
+  { id: "projects", label: "المشاريع" },
+  { id: "site", label: "الموقع" },
   { id: "settings", label: "الإعدادات" },
 ];
 
@@ -123,6 +127,8 @@ export default function AdminApp() {
         {tab === "overview" && <Overview />}
         {tab === "requests" && <Requests onChange={() => void refreshBadges()} />}
         {tab === "reviews" && <Reviews onChange={() => void refreshBadges()} />}
+        {tab === "projects" && <Projects />}
+        {tab === "site" && <SiteSettings />}
         {tab === "settings" && <Settings />}
       </div>
     </main>

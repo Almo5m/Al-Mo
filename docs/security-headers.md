@@ -16,7 +16,8 @@
 
 ## الدومينات المسموحة في الـ CSP
 - **الخطوط:** `fonts.googleapis.com` و`fonts.gstatic.com`.
-- **الاتصال بالسيرفر:** `*.supabase.co` (الرفيق والفورم).
+- **الاتصال بالسيرفر:** `*.supabase.co` (الرفيق والفورم واللوحة).
+- **صور المعاينة اللي بترفعها من اللوحة:** `*.supabase.co` في `img-src` (Supabase Storage).
 - **الديمو في النافذة (`frame-src`):** `almo5m.github.io` بس.
 - باقي المصادر `'self'` يعني دومين الموقع نفسه.
 - `'unsafe-inline'` للـ CSS فقط (مش للسكريبتات). السكريبتات `'self'` بس، وعشان كده سكريبت اللغة اتنقل من `index.html` لملف `public/lang-init.js`.

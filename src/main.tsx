@@ -10,7 +10,18 @@ const Admin = lazy(() => import("./admin/AdminApp"));
 const Review = lazy(() => import("./review/ReviewPage"));
 
 const path = location.pathname.replace(/\/+$/, "");
+const side = path === "/admin" || path === "/review";
 const page = path === "/admin" ? <Admin /> : path === "/review" ? <Review /> : <App />;
+
+// صورة الشعار بتتحمّل مسبقًا في الموقع الرئيسي بس (شاشة التحميل بتستخدمها)، مش في اللوحة وصفحة التقييم
+if (!side) {
+  const l = document.createElement("link");
+  l.rel = "preload";
+  l.as = "image";
+  l.href = "/logo-full.webp";
+  l.type = "image/webp";
+  document.head.appendChild(l);
+}
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
